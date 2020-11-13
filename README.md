@@ -8,4 +8,4 @@ Final Project mata kuliah Praktikum Pengembangan Perangkat Lunak
 
 - __Luis Tanoto__: 18/424191/PA/18296
 
-- __Muhammad Naufal Arkan Rafii__:18/424193/PA/18298
+- __Muhammad Naufal Arkan Rafii__: 18/424193/PA/18298
