@@ -23,34 +23,65 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
+      <router-link to="/">
+        <v-btn text>
+          Home
+        </v-btn>
+      </router-link>
+      <router-link
+        v-if="currentUser && userProfile"
+        :to="'/' + userProfile.role"
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <v-btn text>
+          Dashboard
+        </v-btn>
+      </router-link>
+      <v-btn class="mr-7" v-if="currentUser" @click="logout" text>
+        <span class="mr-2">Logout</span>
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
+      <router-link v-if="!currentUser" to="/login">
+        <v-btn text>
+          Login
+        </v-btn>
+      </router-link>
+      <router-link v-if="!currentUser" to="/register">
+        <v-btn class="mr-7" text>
+          Register
+        </v-btn>
+      </router-link>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+import firebase from "./firebase";
+import { mapState } from "vuex";
 
 export default {
   name: "App",
 
-  components: {
-    HelloWorld
+  data() {
+    return {};
   },
-
-  data: () => ({
-    //
-  })
+  methods: {
+    async logout() {
+      try {
+        await firebase.auth.signOut();
+      } catch (error) {
+        console.error(error);
+      }
+      this.$store.commit("setCurrentUser", null);
+      this.$store.commit("setUserProfile", null);
+      this.$router.push("/login");
+    }
+  },
+  computed: {
+    ...mapState(["currentUser", "userProfile"])
+  }
 };
 </script>
