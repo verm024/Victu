@@ -112,7 +112,7 @@ export default {
         next();
       }
     } else {
-      next("/writer");
+      next("/" + store.state.userProfile.role);
     }
   }
 };
