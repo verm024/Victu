@@ -8,6 +8,7 @@ import Register from "../views/Auth/Register";
 import DefaultUser from "../views/Dashboard/User";
 import Writer from "../views/Dashboard/Writer";
 import AddContent from "../views/AddContent";
+import EditContent from "../views/EditContent";
 import Nutritionist from "../views/Dashboard/Nutritionist";
 import Admin from "../views/Dashboard/Admin";
 
@@ -56,6 +57,16 @@ const routes = [
     path: "/add-content",
     name: "Add Content",
     component: AddContent,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "writer",
+      title: "Add New Content"
+    }
+  },
+  {
+    path: "/edit-content/:id",
+    name: "Edit Content",
+    component: EditContent,
     meta: {
       requiresLogin: true,
       allowedRole: "writer",
