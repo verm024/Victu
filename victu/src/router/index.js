@@ -6,10 +6,12 @@ import store from "../store";
 import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import DefaultUser from "../views/Dashboard/User";
+import DetailContent from "../views/DetailContent";
 import Writer from "../views/Dashboard/Writer";
 import AddContent from "../views/AddContent";
 import EditContent from "../views/EditContent";
 import Nutritionist from "../views/Dashboard/Nutritionist";
+import ProofreadingContent from "../views/ProofreadingContent";
 import Admin from "../views/Dashboard/Admin";
 
 Vue.use(VueRouter);
@@ -34,6 +36,16 @@ const routes = [
     }
   },
   {
+    path: "/content/:id",
+    name: "Detail Content",
+    component: DetailContent,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user+writer+nutritionist+admin",
+      title: "Content"
+    }
+  },
+  {
     path: "/nutritionist",
     name: "Dashboard Nutritionist",
     component: Nutritionist,
@@ -41,6 +53,16 @@ const routes = [
       requiresLogin: true,
       allowedRole: "nutritionist",
       title: "Dashboard"
+    }
+  },
+  {
+    path: "/proofreading",
+    name: "Proofreading",
+    component: ProofreadingContent,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "nutritionist+admin",
+      title: "Proofreading"
     }
   },
   {

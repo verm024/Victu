@@ -5,13 +5,13 @@
     <input type="text" placeholder="isi" v-model="form_konten.isi" />
     <input type="file" @change="handleFileChange" />
     <button @click="updateContent">Add</button>
-  </div>  
+  </div>
 </template>
 
 <script>
 import firebase from "../firebase";
 import { mapState } from "vuex";
-import store from "../store"
+import store from "../store";
 
 export default {
   data() {
@@ -22,7 +22,7 @@ export default {
         foto: "",
         new_foto: ""
       }
-    }
+    };
   },
   computed: {
     ...mapState(["currentUser", "userProfile"])
@@ -48,7 +48,10 @@ export default {
         tanggal_diposting: firebase.timestamp
       };
       try {
-        await firebase.db.collection("contents").doc(this.$route.params.id).update(contentData);
+        await firebase.db
+          .collection("contents")
+          .doc(this.$route.params.id)
+          .update(contentData);
       } catch (error) {
         console.error(error);
       }
@@ -79,22 +82,24 @@ export default {
           } catch (error) {
             console.error(error);
           }
-        }
-        else {
+        } else {
           this.$router.push("/writer");
         }
       }
     }
   },
   async created() {
-    let doc
+    let doc;
     try {
-      doc = await firebase.db.collection("contents").doc(this.$route.params.id).get()
-      let data = doc.data()
-      this.form_konten = data
-      this.form_konten.new_foto = ""
+      doc = await firebase.db
+        .collection("contents")
+        .doc(this.$route.params.id)
+        .get();
+      let data = doc.data();
+      this.form_konten = data;
+      this.form_konten.new_foto = "";
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
   async beforeRouteEnter(to, from, next) {
@@ -105,11 +110,10 @@ export default {
     if (doc.exists) {
       let data = doc.data();
       if (data.writer.id == store.state.currentUser.uid) {
-        if(data.status == "proofreading") {
-          next()
-        }
-        else {
-          next("/writer")
+        if (data.status == "proofreading") {
+          next();
+        } else {
+          next("/writer");
         }
       } else {
         next("/writer");
@@ -117,10 +121,8 @@ export default {
     } else {
       next("/writer");
     }
-  },
-}
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
