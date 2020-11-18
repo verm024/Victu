@@ -3,6 +3,38 @@
     Detail Content
     {{ data_konten.judul }}
     {{ data_konten.isi }}
+    <button
+      v-if="
+        userProfile.role == 'nutritionist' &&
+          data_konten.status == 'proofreading'
+      "
+      @click="setujuiKonten"
+    >
+      Setuju
+    </button>
+    <button
+      v-if="
+        userProfile.role == 'nutritionist' &&
+          data_konten.status == 'proofreading'
+      "
+      @click="hapusKonten"
+    >
+      Tolak
+    </button>
+    <button
+      v-if="userProfile.role == 'admin' && data_konten.status != 'deleted'"
+      @click="hapusKonten"
+    >
+      Hapus
+    </button>
+    <button
+      v-if="
+        userProfile.role == 'writer' && data_konten.status == 'proofreading'
+      "
+      @click="hapusKonten"
+    >
+      Hapus
+    </button>
   </div>
 </template>
 
@@ -27,6 +59,31 @@ export default {
         );
       }
     }
+  },
+  methods: {
+    async setujuiKonten() {
+      try {
+        await firebase.db
+          .collection("contents")
+          .doc(this.$route.params.id)
+          .update({ status: "posted", tanggal_diposting: firebase.timestamp });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async hapusKonten() {
+      try {
+        await firebase.db
+          .collection("contents")
+          .doc(this.$route.params.id)
+          .update({ status: "deleted" });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  },
+  computed: {
+    ...mapState(["currentUser", "userProfile"])
   },
   async beforeRouteEnter(to, from, next) {
     let doc = await firebase.db
