@@ -7,6 +7,8 @@ import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import DefaultUser from "../views/Dashboard/User";
 import DetailContent from "../views/DetailContent";
+import SearchNutritionist from "../views/SearchNutritionist";
+import DetailNutritionist from "../views/DetailNutritionist";
 import Writer from "../views/Dashboard/Writer";
 import AddContent from "../views/AddContent";
 import EditContent from "../views/EditContent";
@@ -43,6 +45,26 @@ const routes = [
       requiresLogin: true,
       allowedRole: "user+writer+nutritionist+admin",
       title: "Content"
+    }
+  },
+  {
+    path: "/search-nutritionist",
+    name: "Search Nutritionist",
+    component: SearchNutritionist,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user",
+      title: "Search Nutritionist"
+    }
+  },
+  {
+    path: "/nutritionist/:id",
+    name: "Detail Nutritionist",
+    component: DetailNutritionist,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user+nutritionist",
+      title: "Detail Nutritionist"
     }
   },
   {
