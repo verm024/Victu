@@ -46,6 +46,14 @@
     >
       Hapus Konten
     </button>
+    <router-link
+      v-if="
+        userProfile.role == 'writer' && data_konten.status == 'proofreading'
+      "
+      :to="'/edit-content/' + data_konten.id"
+    >
+      Edit konten
+    </router-link>
   </div>
 </template>
 

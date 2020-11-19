@@ -1,6 +1,41 @@
 <template>
   <div class="writer">
     Dashboard Writer
+    <br />
+    <router-link to="/add-content">Buat konten baru</router-link>
+    <br />
+    <br />
+    Daftar Konten Menunggu proofreading
+    <div v-for="(item, index) in filterProofreading" :key="index">
+      <router-link :to="'/content/' + item.id">
+        Judul: {{ item.judul }}, Isi: {{ item.isi }}
+      </router-link>
+    </div>
+    <div v-if="filterProofreading.length == 0">
+      Belum ada
+    </div>
+    <br />
+    <br />
+    Daftar Konten Sudah Diposting/disetujui
+    <div v-for="(item, index) in filterPosted" :key="index">
+      <router-link :to="'/content/' + item.id">
+        Judul: {{ item.judul }}, Isi: {{ item.isi }}
+      </router-link>
+    </div>
+    <div v-if="filterPosted.length == 0">
+      Belum ada
+    </div>
+    <br />
+    <br />
+    Daftar Konten Sudah Dihapus
+    <div v-for="(item, index) in filterDeleted" :key="index">
+      <router-link :to="'/content/' + item.id">
+        Judul: {{ item.judul }}, Isi: {{ item.isi }}
+      </router-link>
+    </div>
+    <div v-if="filterDeleted.length == 0">
+      Belum ada
+    </div>
   </div>
 </template>
 

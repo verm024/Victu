@@ -11,6 +11,7 @@ import DetailUser from "../views/DetailUser";
 import Pesan from "../views/Pesan";
 import DetailPesan from "../views/DetailPesan";
 import SearchNutritionist from "../views/SearchNutritionist";
+import SearchContent from "../views/SearchContent";
 import DetailNutritionist from "../views/DetailNutritionist";
 import Writer from "../views/Dashboard/Writer";
 import AddContent from "../views/AddContent";
@@ -91,6 +92,16 @@ const routes = [
     }
   },
   {
+    path: "/search-content",
+    name: "Search Content",
+    component: SearchContent,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user",
+      title: "Search Content"
+    }
+  },
+  {
     path: "/nutritionist/:id",
     name: "Detail Nutritionist",
     component: DetailNutritionist,
@@ -147,7 +158,7 @@ const routes = [
     meta: {
       requiresLogin: true,
       allowedRole: "writer",
-      title: "Add New Content"
+      title: "Edit Content"
     }
   },
   {
