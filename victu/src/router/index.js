@@ -6,6 +6,7 @@ import store from "../store";
 import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import DefaultUser from "../views/Dashboard/User";
+import InputFood from "../views/InputFood";
 import DetailContent from "../views/DetailContent";
 import DetailUser from "../views/DetailUser";
 import Pesan from "../views/Pesan";
@@ -52,6 +53,16 @@ const routes = [
     }
   },
   {
+    path: "/input-food",
+    name: "Input Food",
+    component: InputFood,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user",
+      title: "Input Food"
+    }
+  },
+  {
     path: "/chat",
     name: "Daftar Pesan",
     component: Pesan,
@@ -87,7 +98,7 @@ const routes = [
     component: SearchNutritionist,
     meta: {
       requiresLogin: true,
-      allowedRole: "user",
+      allowedRole: "user+admin",
       title: "Search Nutritionist"
     }
   },
@@ -97,7 +108,7 @@ const routes = [
     component: SearchContent,
     meta: {
       requiresLogin: true,
-      allowedRole: "user",
+      allowedRole: "user+admin",
       title: "Search Content"
     }
   },
