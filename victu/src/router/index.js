@@ -7,6 +7,8 @@ import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import DefaultUser from "../views/Dashboard/User";
 import DetailContent from "../views/DetailContent";
+import Pesan from "../views/Pesan";
+import DetailPesan from "../views/DetailPesan";
 import SearchNutritionist from "../views/SearchNutritionist";
 import DetailNutritionist from "../views/DetailNutritionist";
 import Writer from "../views/Dashboard/Writer";
@@ -35,6 +37,26 @@ const routes = [
       requiresLogin: true,
       allowedRole: "user",
       title: "Dashboard"
+    }
+  },
+  {
+    path: "/chat",
+    name: "Daftar Pesan",
+    component: Pesan,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user+nutritionist",
+      title: "Daftar Pesan"
+    }
+  },
+  {
+    path: "/chat/:id",
+    name: "Pesan",
+    component: DetailPesan,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user+nutritionist",
+      title: "Pesan"
     }
   },
   {
