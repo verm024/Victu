@@ -39,6 +39,9 @@
     <div class="button">
       <button @click="login">Login</button>
     </div>
+    <div class="bottom-text">
+      Don't have an account? <router-link to="/register">Create new one!</router-link>
+    </div>
   </div>
 </template>
 
@@ -125,6 +128,20 @@ export default {
   border-radius: 10px;
   color: white;
   padding: 10px 32px;
+}
+
+.bottom-text {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  color: #28190E;
+  margin-top: 20px;
+}
+
+.bottom-text a {
+  text-decoration: underline;
+  color: #F7B516;
 }
 </style>
 
