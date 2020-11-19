@@ -1,6 +1,15 @@
 <template>
-  <v-app>
-    <v-app-bar app color="primary" dark>
+  <v-app style="background: #FFFCF2">
+    <v-app-bar
+      v-if="
+        $route.name != 'Home' &&
+          $route.name != 'Login' &&
+          $route.name != 'Register'
+      "
+      app
+      color="primary"
+      dark
+    >
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -85,3 +94,9 @@ export default {
   }
 };
 </script>
+
+<style>
+a {
+  text-decoration: none;
+}
+</style>
