@@ -2,9 +2,11 @@
   <div class="proofreading">
     Daftar Konten yang harus diproofreading
     <div v-for="(item, index) in daftar_konten" :key="index">
-      {{ item.judul }}
-      {{ item.isi }}
-      {{ item.id }}
+      <router-link :to="'/content/' + item.id">
+        {{ item.judul }}
+        {{ item.isi }}
+        {{ item.id }}
+      </router-link>
     </div>
   </div>
 </template>

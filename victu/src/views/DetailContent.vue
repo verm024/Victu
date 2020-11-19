@@ -1,8 +1,16 @@
 <template>
   <div class="detail-content">
     Detail Content
-    {{ data_konten.judul }}
-    {{ data_konten.isi }}
+    <br />
+    Judul: {{ data_konten.judul }}
+    <br />
+    Isi: {{ data_konten.isi }}
+    <br />
+    <img :src="data_konten.foto" />
+    <br />
+    Status: {{ data_konten.status }}
+    <br />
+    <br />
     <button
       v-if="
         userProfile.role == 'nutritionist' &&
@@ -10,8 +18,9 @@
       "
       @click="setujuiKonten"
     >
-      Setuju
+      Setujui Konten
     </button>
+    <br />
     <button
       v-if="
         userProfile.role == 'nutritionist' &&
@@ -19,21 +28,23 @@
       "
       @click="hapusKonten"
     >
-      Tolak
+      Tolak Konten
     </button>
+    <br />
     <button
       v-if="userProfile.role == 'admin' && data_konten.status != 'deleted'"
       @click="hapusKonten"
     >
-      Hapus
+      Hapus Konten
     </button>
+    <br />
     <button
       v-if="
         userProfile.role == 'writer' && data_konten.status == 'proofreading'
       "
       @click="hapusKonten"
     >
-      Hapus
+      Hapus Konten
     </button>
   </div>
 </template>

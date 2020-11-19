@@ -7,6 +7,7 @@ import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import DefaultUser from "../views/Dashboard/User";
 import DetailContent from "../views/DetailContent";
+import DetailUser from "../views/DetailUser";
 import Pesan from "../views/Pesan";
 import DetailPesan from "../views/DetailPesan";
 import SearchNutritionist from "../views/SearchNutritionist";
@@ -37,6 +38,16 @@ const routes = [
       requiresLogin: true,
       allowedRole: "user",
       title: "Dashboard"
+    }
+  },
+  {
+    path: "/user/:id",
+    name: "Detail User",
+    component: DetailUser,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user+nutritionist+admin",
+      title: "Detail User"
     }
   },
   {

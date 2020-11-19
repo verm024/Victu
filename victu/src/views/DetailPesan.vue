@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-pesan">
+  <div class="detail-pesan" v-if="informasi_pesan.user">
     Detail pesan (Room Chat)
     <div
       :class="
@@ -11,7 +11,12 @@
       :key="index"
     >
       {{ item.content }}
-      {{ item.sender }}
+      <router-link
+        v-if="item.sender == 'user'"
+        :to="'/user/' + informasi_pesan.user.id"
+      >
+        {{ item.sender }}
+      </router-link>
     </div>
     <input type="text" placeholder="pesan baru" v-model="pesan_baru" />
     <button @click="kirimPesan">Kirim</button>
