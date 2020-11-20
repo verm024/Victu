@@ -55,42 +55,11 @@
       </div>
 
       <carousel class="my-12" :perPageCustom="[[480, 2], [768, 3]]">
-        <slide>
-          <v-card class="mr-5" max-width="200">
-            <v-img
-              height="100"
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            ></v-img>
-
-            <div class="card-title">Ayam Goreng Rempah</div>
-            <div class="card-subtitle">Calorie: 500 cals</div>
-          </v-card>
-        </slide>
-        <slide>
-          <v-card class="mr-5" max-width="200">
-            <v-img
-              height="100"
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            ></v-img>
-
-            <div class="card-title">Ayam Goreng Rempah</div>
-            <div class="card-subtitle">Calorie: 500 cals</div>
-          </v-card>
-        </slide>
-        <slide>
-          <v-card class="mr-5" max-width="200">
-            <v-img
-              height="100"
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            ></v-img>
-
-            <div class="card-title">Ayam Goreng Rempah</div>
-            <div class="card-subtitle">Calorie: 500 cals</div>
-          </v-card>
-        </slide>
+        <RecommendedFood v-for="(food, i) in recommendedFoods" :key="i" :food="food" />
       </carousel>
 
     </v-container>
+
     <router-link to="/search-content">
       Lihat konten kesehatan
     </router-link>
@@ -98,8 +67,31 @@
 </template>
 
 <script>
-import { Carousel, Slide } from 'vue-carousel';
+import { Carousel } from 'vue-carousel';
+import RecommendedFood from '../../components/RecommendedFood';
+
 export default {
+  data() {
+    return {
+      recommendedFoods: [
+        {
+          name: 'Ayam Goren Rempah',
+          calorie: '500 cals',
+          src: 'https://cdn.vuetifyjs.com/images/cards/cooking.png'
+        },
+        {
+          name: 'Ayam Goren Rempah',
+          calorie: '500 cals',
+          src: 'https://cdn.vuetifyjs.com/images/cards/cooking.png'
+        },
+        {
+          name: 'Ayam Goren Rempah',
+          calorie: '500 cals',
+          src: 'https://cdn.vuetifyjs.com/images/cards/cooking.png'
+        }
+      ]
+    }
+  },
   components: {
     Carousel,
     Slide
