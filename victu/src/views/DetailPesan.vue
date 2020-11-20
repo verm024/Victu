@@ -1,25 +1,69 @@
 <template>
   <div class="detail-pesan" v-if="informasi_pesan.user">
-    Detail pesan (Room Chat)
-    <div
-      :class="
-        index == daftar_pesan.length - 1
-          ? 'scroll-to card-detail'
-          : 'card-detail'
-      "
-      v-for="(item, index) in daftar_pesan"
-      :key="index"
-    >
-      {{ item.content }}
-      <router-link
-        v-if="item.sender == 'user'"
-        :to="'/user/' + informasi_pesan.user.id"
+    <v-app-bar color="28190E" dense dark fixed>
+      <v-app-bar-nav-icon @click="back">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-app-bar-nav-icon>
+
+      <v-toolbar-title>{{
+        userProfile.role == "user"
+          ? informasi_pesan.nutritionist.nama
+          : informasi_pesan.user.nama
+      }}</v-toolbar-title>
+    </v-app-bar>
+    <div class="container-fluid list-pesan">
+      <div
+        :class="
+          index == daftar_pesan.length - 1
+            ? 'scroll-to card-detail'
+            : 'card-detail'
+        "
+        v-for="(item, index) in daftar_pesan"
+        :key="index"
       >
-        {{ item.sender }}
-      </router-link>
+        <div class="wrapper left" v-if="item.sender != userProfile.role">
+          <div
+            class="sender"
+            v-if="informasi_pesan.user && item.sender == 'user'"
+          >
+            user {{ informasi_pesan.user.nama }}
+          </div>
+          <div
+            class="sender"
+            v-if="informasi_pesan.user && item.sender == 'nutritionist'"
+          >
+            {{ informasi_pesan.nutritionist.nama }}
+          </div>
+          <div class="content deskripsi">
+            {{ item.content }}
+          </div>
+          <div class="time" v-if="item.tanggal_chat">
+            {{ formatDate(item.tanggal_chat.seconds) }}
+          </div>
+        </div>
+        <div class="wrapper right" v-if="item.sender == userProfile.role">
+          <div class="content deskripsi">
+            {{ item.content }}
+          </div>
+          <div class="time" v-if="item.tanggal_chat">
+            {{ formatDate(item.tanggal_chat.seconds) }}
+          </div>
+        </div>
+      </div>
+      <div v-if="daftar_pesan.length == 0" class="empty">
+        No message yet
+      </div>
     </div>
-    <input type="text" placeholder="pesan baru" v-model="pesan_baru" />
-    <button @click="kirimPesan">Kirim</button>
+    <div class="pesan-baru">
+      <div class="input">
+        <input type="text" v-model="pesan_baru" />
+      </div>
+      <div class="kirim">
+        <button @click="kirimPesan">
+          Send
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -61,11 +105,14 @@ export default {
   },
   updated() {
     this.update_counter += 1;
-    if (this.update_counter == 4) {
+    if (this.update_counter <= 4) {
       this.scrollToElement();
     }
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
     scrollToElement() {
       let el = this.$el.getElementsByClassName("scroll-to")[0];
       if (el) {
@@ -147,4 +194,104 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.card-detail {
+  width: 100%;
+}
+
+.wrapper {
+  width: 75%;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #f1f4f2;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.04);
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.left {
+  margin-right: auto;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.sender {
+  font-size: 18px;
+  color: #28190e !important;
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #28190e;
+  opacity: 0.7;
+}
+
+.time {
+  width: fit-content;
+  margin-left: auto;
+  font-size: 12px;
+  color: #89969f;
+  font-weight: 300;
+  margin-top: 20px;
+}
+
+.list-pesan {
+  padding: 90px 16px 70px 16px;
+}
+
+.pesan-baru {
+  z-index: 3;
+  bottom: 0;
+  padding: 12px;
+  position: fixed;
+  background-color: #ffffff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.04);
+  border-top: 1px solid #f1f4f2;
+}
+
+.input {
+  width: 100%;
+}
+
+.input input {
+  border: 1px solid #dee7ee;
+  font-size: 18px;
+  padding: 8px 12px;
+  width: 100%;
+  color: #333333;
+  outline: none;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.kirim {
+  width: 100px;
+  height: 100%;
+}
+
+.kirim button {
+  outline: none;
+  color: white;
+  font-weight: 700;
+  background: #28190e;
+  border: none;
+  padding: 10px 13px;
+  border-radius: 0px 8px 8px 0px;
+}
+
+.empty {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 50px;
+  color: #89969f;
+}
+</style>

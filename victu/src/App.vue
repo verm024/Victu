@@ -4,7 +4,8 @@
       v-if="
         $route.name != 'Home' &&
           $route.name != 'Login' &&
-          $route.name != 'Register'
+          $route.name != 'Register' && 
+          $route.name != 'Pesan'
       "
       app
       color="primary"
