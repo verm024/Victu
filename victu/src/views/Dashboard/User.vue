@@ -53,15 +53,43 @@
       <div class="profile-title">
         LATEST RECOMMENDATION
       </div>
-      <v-card class="mx-auto my-12" max-width="150">
-        <v-img
-          height="100"
-          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-        ></v-img>
 
-        <div class="card-title">Ayam Goreng Rempah</div>
-        <div class="card-subtitle">Calorie: 500 cals</div>
-      </v-card>
+      <carousel class="my-12" :perPageCustom="[[480, 2], [768, 3]]">
+        <slide>
+          <v-card class="mr-5" max-width="200">
+            <v-img
+              height="100"
+              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+            ></v-img>
+
+            <div class="card-title">Ayam Goreng Rempah</div>
+            <div class="card-subtitle">Calorie: 500 cals</div>
+          </v-card>
+        </slide>
+        <slide>
+          <v-card class="mr-5" max-width="200">
+            <v-img
+              height="100"
+              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+            ></v-img>
+
+            <div class="card-title">Ayam Goreng Rempah</div>
+            <div class="card-subtitle">Calorie: 500 cals</div>
+          </v-card>
+        </slide>
+        <slide>
+          <v-card class="mr-5" max-width="200">
+            <v-img
+              height="100"
+              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+            ></v-img>
+
+            <div class="card-title">Ayam Goreng Rempah</div>
+            <div class="card-subtitle">Calorie: 500 cals</div>
+          </v-card>
+        </slide>
+      </carousel>
+
     </v-container>
     <router-link to="/search-content">
       Lihat konten kesehatan
@@ -70,7 +98,13 @@
 </template>
 
 <script>
-export default {};
+import { Carousel, Slide } from 'vue-carousel';
+export default {
+  components: {
+    Carousel,
+    Slide
+  }
+};
 </script>
 
 <style scoped>
