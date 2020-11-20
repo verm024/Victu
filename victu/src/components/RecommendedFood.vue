@@ -5,9 +5,10 @@
                 height="100"
                 :src="require(food.src)"
             ></v-img> -->
+            <img height="100" :src="require(`@/assets/images/${food.src}`)" alt="" />
 
             <div class="card-title">{{food.name}}</div>
-            <div class="card-subtitle">Calorie: {{food.calorie}}</div>
+            <div class="card-subtitle">Calorie: {{food.calories}}</div>
         </v-card>
     </slide>
 </template>

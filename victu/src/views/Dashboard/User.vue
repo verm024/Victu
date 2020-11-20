@@ -11,11 +11,20 @@
       <img src="@/assets/images/user.png" alt="">
     </div>
 
-    <div class="mt-10">
+    <div class="mt-15">
       <SectionHeader header="What do you want to do?" />
       <v-row class="features-row mb-3">
         <Feature v-for="(feature, i) in features" :key="i" :feature="feature" />
       </v-row>
+    </div>
+
+    <div class="mt-15">
+      <SectionHeader header="Food Recommendation" />
+      <carousel>
+        <!-- <v-row class="features-row mb-3"> -->
+          <RecommendedFood v-for="(food, i) in foodRecommendations" :key="i" :food="food" />
+        <!-- </v-row> -->
+      </carousel>
     </div>
 
   </v-container>
@@ -24,10 +33,15 @@
 <script>
 import SectionHeader from '../../components/SectionHeader'
 import Feature from '../../components/Feature'
+import RecommendedFood from '../../components/RecommendedFood'
+import { Carousel } from 'vue-carousel';
+
 export default {
   components: {
     SectionHeader,
-    Feature
+    Feature,
+    RecommendedFood,
+    Carousel
   },
   data() {
     return {
@@ -47,6 +61,23 @@ export default {
         {
           feature: 'Plot Daily Calorie',
           src: 'feature2.png'
+        }
+      ],
+      foodRecommendations: [
+        {
+          food: 'Fried Chicken',
+          calories: '700 calories',
+          src: 'food.png'
+        },
+        {
+          food: 'Fried Chicken',
+          calories: '700 calories',
+          src: 'food.png'
+        },
+        {
+          food: 'Fried Chicken',
+          calories: '700 calories',
+          src: 'food.png'
         }
       ]
     }

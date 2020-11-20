@@ -1,5 +1,5 @@
 <template>
-    <h3 class="text-h4 text-sm-h3 mb-5">{{header}}</h3>
+    <h4 class="text-h5 text-sm-h4 mb-5">{{header}}</h4>
 </template>
 
 <script>
