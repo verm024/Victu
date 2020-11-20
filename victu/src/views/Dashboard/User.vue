@@ -1,102 +1,57 @@
 <template>
-  <div class="user d-flex align-center flex-column">
-    <div class="logo">
-      <img src="@/assets/images/logo.png" alt="Victu" />
+  <!-- <div class="user d-flex align-center flex-column">
+    
+  </div> -->
+  <v-container>
+    <div class="d-flex justify-space-between align-center white pa-5 rounded-xl mt-5">
+      <div>
+        <h3 class="text-h4 text-sm-h3 mb-2">Welcome, <strong>John</strong></h3>
+        <p class="gray--text">1029 calories today</p>
+      </div>
+      <img src="@/assets/images/user.png" alt="">
     </div>
 
-    <v-container class="profile d-flex" fluid>
-      <v-row>
-        <v-col class="col-6 col-md-6 offset-md-3">
-          <div class="profile-title">
-            Profile Information
-          </div>
-          <div class="d-flex align-center mb-6">
-            <v-avatar size="116" tile class="pl-2">
-              <v-img
-                src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
-                alt="profile image"
-              />
-            </v-avatar>
-            <div class="ml-2">
-              <h4>Adam Jones</h4>
-              <h4>25 Years old</h4>
-            </div>
-          </div>
-        </v-col>
+    <div class="mt-10">
+      <SectionHeader header="What do you want to do?" />
+      <v-row class="features-row mb-3">
+        <Feature v-for="(feature, i) in features" :key="i" :feature="feature" />
       </v-row>
+    </div>
 
-      <v-row>
-        <v-col class="col-6 col-md-6 offset-md-3">
-          <div class="profile-right-title">
-            Today's Date
-          </div>
-          <div class="profile-right-content">
-            18 November 2020
-          </div>
-          <div class="profile-right-title">
-            Today's Calorie Total
-          </div>
-          <div class="profile-right-content">
-            2300 calories
-          </div>
-          <div class="profile-right-title">
-            Last Calorie Intake
-          </div>
-          <div class="profile-right-content">
-            700 calories at 15:40
-          </div>
-        </v-col>
-      </v-row>
-    </v-container>
-
-    <v-container>
-      <div class="profile-title">
-        LATEST RECOMMENDATION
-      </div>
-
-      <carousel class="my-12" :perPageCustom="[[480, 2], [768, 3]]">
-        <RecommendedFood v-for="(food, i) in recommendedFoods" :key="i" :food="food" />
-      </carousel>
-
-    </v-container>
-
-    <router-link to="/search-content">
-      Lihat konten kesehatan
-    </router-link>
-  </div>
+  </v-container>
 </template>
 
 <script>
-import { Carousel } from 'vue-carousel';
-import RecommendedFood from '../../components/RecommendedFood';
-
+import SectionHeader from '../../components/SectionHeader'
+import Feature from '../../components/Feature'
 export default {
+  components: {
+    SectionHeader,
+    Feature
+  },
   data() {
     return {
-      recommendedFoods: [
+      features: [
         {
-          name: 'Ayam Goren Rempah',
-          calorie: '500 cals',
-          src: 'https://cdn.vuetifyjs.com/images/cards/cooking.png'
+          feature: 'Check Calorie',
+          src: 'feature1.png'
         },
         {
-          name: 'Ayam Goren Rempah',
-          calorie: '500 cals',
-          src: 'https://cdn.vuetifyjs.com/images/cards/cooking.png'
+          feature: 'Healthy Contents',
+          src: 'feature3.png'
         },
         {
-          name: 'Ayam Goren Rempah',
-          calorie: '500 cals',
-          src: 'https://cdn.vuetifyjs.com/images/cards/cooking.png'
+          feature: '1-on-1 Consultation',
+          src: 'feature4.png'
+        },
+        {
+          feature: 'Plot Daily Calorie',
+          src: 'feature2.png'
         }
       ]
     }
-  },
-  components: {
-    Carousel,
-    Slide
   }
-};
+}
 </script>
 
 <style scoped>

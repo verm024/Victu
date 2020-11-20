@@ -61,7 +61,7 @@
       </router-link>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="main">
       <router-view></router-view>
     </v-main>
   </v-app>
@@ -98,5 +98,8 @@ export default {
 <style>
 a {
   text-decoration: none;
+}
+.main {
+  background-color: #FFFCF2;
 }
 </style>
