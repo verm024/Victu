@@ -1,7 +1,7 @@
 <template>
-    <v-col class="features-card mr-3 white rounded-xl text-center">
-        <div class="features-image mb-3">
-            <img :src="require(`@/assets/images/${feature.src}`)" alt="" />
+    <v-col class="feature mr-5 white rounded-xl text-center">
+        <div class="mb-3">
+            <img class="feature__image" :src="require(`@/assets/images/${feature.src}`)" alt="" />
         </div>
         <div class="features-title">
             {{feature.feature}}
@@ -14,3 +14,10 @@ export default {
     props: ['feature']
 }
 </script>
+
+<style>
+    .feature__image {
+        width: 25px;
+        height: auto;
+    }
+</style>

@@ -1,14 +1,12 @@
 <template>
-    <slide>
-        <v-card class="mr-5" max-width="200">
-            <!-- <v-img
-                height="100"
-                :src="require(food.src)"
-            ></v-img> -->
-            <img height="100" :src="require(`@/assets/images/${food.src}`)" alt="" />
+    <slide class="mr-3">
+        <v-card class="mx-auto" max-width="300">
+            <img class="recommendedFood__image" :src="require(`@/assets/images/${food.src}`)" alt="" />
 
-            <div class="card-title">{{food.name}}</div>
-            <div class="card-subtitle">Calorie: {{food.calories}}</div>
+            <div class="pa-3">
+                <div class="card-title"><strong>{{food.name}}</strong></div>
+                <div class="card-subtitle grey--text">{{food.calories}}</div>
+            </div>
         </v-card>
     </slide>
 </template>
@@ -22,3 +20,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .recommendedFood__image {
+        width: 100%;
+        height: auto;
+    }
+</style>

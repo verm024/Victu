@@ -3,7 +3,7 @@
     
   </div> -->
   <v-container>
-    <div class="d-flex justify-space-between align-center white pa-5 rounded-xl mt-5">
+    <div class="d-flex justify-space-between align-center white pa-5 rounded-xl mt-5 mb-15">
       <div>
         <h3 class="text-h4 text-sm-h3 mb-2">Welcome, <strong>John</strong></h3>
         <p class="gray--text">1029 calories today</p>
@@ -11,16 +11,16 @@
       <img src="@/assets/images/user.png" alt="">
     </div>
 
-    <div class="mt-15">
+    <div class="mb-15">
       <SectionHeader header="What do you want to do?" />
       <v-row class="features-row mb-3">
         <Feature v-for="(feature, i) in features" :key="i" :feature="feature" />
       </v-row>
     </div>
 
-    <div class="mt-15">
+    <div class="mb-15">
       <SectionHeader header="Food Recommendation" />
-      <carousel>
+      <carousel :perPageCustom="[[330, 1], [560, 2], [768, 3]]">
         <!-- <v-row class="features-row mb-3"> -->
           <RecommendedFood v-for="(food, i) in foodRecommendations" :key="i" :food="food" />
         <!-- </v-row> -->
@@ -65,17 +65,17 @@ export default {
       ],
       foodRecommendations: [
         {
-          food: 'Fried Chicken',
+          name: 'Fried Chicken',
           calories: '700 calories',
           src: 'food.png'
         },
         {
-          food: 'Fried Chicken',
+          name: 'Fried Chicken',
           calories: '700 calories',
           src: 'food.png'
         },
         {
-          food: 'Fried Chicken',
+          name: 'Fried Chicken',
           calories: '700 calories',
           src: 'food.png'
         }
