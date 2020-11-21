@@ -1,22 +1,23 @@
 <template>
   <v-app style="background: #FFFCF2">
     <v-app-bar
-      color="black"
+      color="#28190E"
       dark
+      dense
+      fixed
+      v-if="
+        $route.name != 'Home' &&
+          $route.name != 'Login' &&
+          $route.name != 'Register' &&
+          $route.name != 'Detail Pesan'
+      "
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Dashboard</v-toolbar-title>
     </v-app-bar>
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      temporary
-    >
-      <v-list
-        nav
-        dense
-      >
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list nav dense>
         <v-list-item-group
           v-model="group"
           active-class="black--text text--accent-4"
@@ -68,7 +69,7 @@ export default {
   data() {
     return {
       drawer: false,
-      group: null,
+      group: null
     };
   },
   methods: {
@@ -94,6 +95,6 @@ a {
   text-decoration: none;
 }
 .main {
-  background-color: #FFFCF2;
+  background-color: #fffcf2;
 }
 </style>

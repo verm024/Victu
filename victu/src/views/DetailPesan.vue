@@ -1,6 +1,6 @@
 <template>
   <div class="detail-pesan" v-if="informasi_pesan.user">
-    <v-app-bar color="28190E" dense dark fixed>
+    <v-app-bar color="#28190E" dense dark fixed>
       <v-app-bar-nav-icon @click="back">
         <v-icon>mdi-chevron-left</v-icon>
       </v-app-bar-nav-icon>
