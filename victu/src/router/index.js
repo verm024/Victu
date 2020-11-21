@@ -20,6 +20,7 @@ import EditContent from "../views/EditContent";
 import Nutritionist from "../views/Dashboard/Nutritionist";
 import ProofreadingContent from "../views/ProofreadingContent";
 import Admin from "../views/Dashboard/Admin";
+import Calorie from '../views/Calorie';
 
 Vue.use(VueRouter);
 
@@ -50,6 +51,16 @@ const routes = [
       requiresLogin: true,
       allowedRole: "user+nutritionist+admin",
       title: "Detail User"
+    }
+  },
+  {
+    path: "/calorie",
+    name: "Calorie",
+    component: Calorie,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user",
+      title: "Calorie"
     }
   },
   {

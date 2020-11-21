@@ -1,66 +1,56 @@
 <template>
   <v-app style="background: #FFFCF2">
     <v-app-bar
-      v-if="
-        $route.name != 'Home' &&
-          $route.name != 'Login' &&
-          $route.name != 'Register' && 
-          $route.name != 'Pesan'
-      "
-      app
-      color="primary"
+      color="black"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <router-link to="/">
-        <v-btn text>
-          Home
-        </v-btn>
-      </router-link>
-      <router-link
-        v-if="currentUser && userProfile"
-        :to="'/' + userProfile.role"
-      >
-        <v-btn text>
-          Dashboard
-        </v-btn>
-      </router-link>
-      <v-btn class="mr-7" v-if="currentUser" @click="logout" text>
-        <span class="mr-2">Logout</span>
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
-      <router-link v-if="!currentUser" to="/login">
-        <v-btn text>
-          Login
-        </v-btn>
-      </router-link>
-      <router-link v-if="!currentUser" to="/register">
-        <v-btn class="mr-7" text>
-          Register
-        </v-btn>
-      </router-link>
+      <v-toolbar-title>Dashboard</v-toolbar-title>
     </v-app-bar>
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+          active-class="black--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Profile</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-help</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Help</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
 
     <v-main class="main">
       <router-view></router-view>
@@ -76,7 +66,10 @@ export default {
   name: "App",
 
   data() {
-    return {};
+    return {
+      drawer: false,
+      group: null,
+    };
   },
   methods: {
     async logout() {
