@@ -15,16 +15,13 @@
   </div> -->
   <v-container>
     <Welcome />
-    
+
     <div>
       <SectionHeader header="Ideal Calorie" />
       <p>Your Ideal Clorie <strong>900 calories</strong></p>
       <SectionHeader header="Check Food Calorie" />
 
-      <div 
-        v-for="i in nFoods"
-        :key="i"
-        class="d-flex flex-column flex-md-row">
+      <div v-for="i in nFoods" :key="i" class="d-flex flex-column flex-md-row">
         <v-text-field
           class="mr-5"
           dense
@@ -41,11 +38,11 @@
           color="#28190E"
         ></v-text-field>
       </div>
-      <button @click="increaseNFood" class="mr-5 font-weight-bold">Add more</button>
+      <button @click="increaseNFood" class="mr-5 font-weight-bold">
+        Add more
+      </button>
       <Button text="Calculate" className="pa-3" />
     </div>
-
-
   </v-container>
 </template>
 
