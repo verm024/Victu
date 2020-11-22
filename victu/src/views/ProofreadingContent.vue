@@ -8,7 +8,6 @@
     >
       <div class="image-wrapper">
         <div class="image">
-          
           <v-img :src="item.foto"><v-overlay absolute></v-overlay></v-img>
         </div>
       </div>
@@ -109,8 +108,8 @@ export default {
 </style>
 
 <style>
-  .v-overlay__scrim {
-    background-color: #f7b516 !important;
-    opacity: .2 !important;
-  }
+.image .v-overlay__scrim {
+  background-color: #f7b516 !important;
+  opacity: 0.2 !important;
+}
 </style>
