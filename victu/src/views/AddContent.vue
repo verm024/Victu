@@ -1,9 +1,26 @@
 <template>
-  <div class="add-content">
-    <input type="text" placeholder="judul" v-model="form_konten.judul" />
-    <input type="text" placeholder="isi" v-model="form_konten.isi" />
+  <div class="add-content container">
+    <v-text-field
+      dense
+      label="Title"
+      type="text"
+      outlined
+      color="#28190E"
+      v-model="form_konten.judul"
+    ></v-text-field>
+    <v-textarea
+      dense
+      label="Content"
+      type="text"
+      outlined
+      color="#28190E"
+      v-model="form_konten.isi"
+    ></v-textarea>
     <input type="file" @change="handleFileChange" />
-    <button @click="addContent">Add</button>
+    <br />
+    <div class="button">
+      <button @click="addContent">Create Content</button>
+    </div>
   </div>
 </template>
 
@@ -82,4 +99,30 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.button {
+  margin-top: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+.button button {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  background: red;
+  background: #f7b516;
+  box-shadow: 2px 4px 30px rgba(244, 204, 143, 0.25);
+  border-radius: 10px;
+  color: white;
+  padding: 10px 32px;
+}
+</style>
+
+<style>
+.add-content {
+  margin-top: 20px;
+}
+</style>
