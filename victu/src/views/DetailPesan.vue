@@ -195,6 +195,10 @@ export default {
 </script>
 
 <style scoped>
+.detail-pesan .v-toolbar__title {
+  padding-left: 0 !important;
+}
+
 .card-detail {
   width: 100%;
 }
@@ -277,7 +281,6 @@ export default {
 }
 
 .kirim {
-  width: 100px;
   height: 100%;
 }
 

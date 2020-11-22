@@ -102,7 +102,7 @@
     <v-dialog v-model="detail_nutritionist" max-width="90%">
       <v-card dark color="#28190E" class="dialog-card">
         <div class="close-dialog-wrapper">
-          <v-btn icon dark @click="dialog = false">
+          <v-btn icon dark @click="detail_nutritionist = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
