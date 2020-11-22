@@ -59,23 +59,67 @@
       <router-view></router-view>
     </v-main>
 
-    <v-bottom-navigation fixed>
-      <v-btn value="home">
+    <v-bottom-navigation
+      color="#28190E"
+      class="bottom-nav"
+      v-if="
+        $route.name != 'Login' &&
+          $route.name != 'Register' &&
+          $route.name != 'Detail Pesan'
+      "
+      fixed
+      grow
+    >
+      <v-btn :to="'/' + userProfile.role" value="home">
         <span>Home</span>
 
         <v-icon>mdi-home</v-icon>
       </v-btn>
 
-      <v-btn value="calorie">
+      <v-btn to="/calorie" v-if="userProfile.role == 'user'" value="calorie">
         <span>Calorie</span>
 
         <v-icon>mdi-food</v-icon>
       </v-btn>
 
-      <v-btn value="consoltation">
+      <v-btn
+        to="/add-content"
+        v-if="userProfile.role == 'writer'"
+        value="add_content"
+      >
+        <span>New Content</span>
+
+        <v-icon>mdi-plus-circle</v-icon>
+      </v-btn>
+
+      <v-btn
+        to="/proofreading"
+        v-if="userProfile.role == 'nutritionist'"
+        value="proofreading"
+      >
+        <span>Proofreading</span>
+
+        <v-icon>mdi-calendar-text</v-icon>
+      </v-btn>
+
+      <v-btn
+        to="/chat"
+        v-if="userProfile.role == 'nutritionist' || userProfile.role == 'user'"
+        value="consultation"
+      >
         <span>Consultation</span>
 
         <v-icon>mdi-account-box</v-icon>
+      </v-btn>
+
+      <v-btn
+        to="/notification"
+        v-if="userProfile.role == 'writer'"
+        value="notification"
+      >
+        <span>Notification</span>
+
+        <v-icon>mdi-bell</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </v-app>
@@ -118,5 +162,17 @@ a {
 }
 .main {
   background-color: #fffcf2;
+}
+</style>
+
+<style scoped>
+.bottom-nav .v-btn {
+  font-family: Roboto;
+  font-size: 12px;
+  letter-spacing: unset !important;
+}
+
+.bottom-nav .v-btn i {
+  margin-bottom: 5px;
 }
 </style>
