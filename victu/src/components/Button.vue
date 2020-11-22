@@ -1,10 +1,10 @@
 <template>
-  <button class="button white--text pa-5 rounded-lg">{{ text }}</button>
+  <button :class="['button white--text rounded-lg', className]">{{ text }}</button>
 </template>
 
 <script>
 export default {
-  props: ["text"]
+  props: ["text", "className"]
 };
 </script>
 

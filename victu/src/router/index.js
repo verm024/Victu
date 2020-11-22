@@ -21,6 +21,7 @@ import Nutritionist from "../views/Dashboard/Nutritionist";
 import ProofreadingContent from "../views/ProofreadingContent";
 import Admin from "../views/Dashboard/Admin";
 import Calorie from "../views/Calorie";
+import IdealCalorie from "../views/IdealCalorie";
 
 Vue.use(VueRouter);
 
@@ -61,6 +62,16 @@ const routes = [
       requiresLogin: true,
       allowedRole: "user",
       title: "Calorie"
+    }
+  },
+  {
+    path: "/ideal-calorie",
+    name: "Ideal Calorie",
+    component: IdealCalorie,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user",
+      title: "Ideal Calorie"
     }
   },
   {
