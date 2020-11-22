@@ -1,5 +1,7 @@
 <template>
-  <button :class="['button white--text rounded-lg', className]">{{ text }}</button>
+  <button :class="['button white--text rounded-lg', className]">
+    {{ text }}
+  </button>
 </template>
 
 <script>

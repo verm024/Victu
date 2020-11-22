@@ -64,16 +64,27 @@
         class="card-pesan"
         v-for="(item, index) in filterSearch"
         :key="index"
-        @click.stop="handleClickDetail(index); detail_nutritionist = true"
       >
-        <div class="icon-wrapper">
+        <div
+          class="icon-wrapper"
+          @click.stop="
+            handleClickDetail(index);
+            detail_nutritionist = true;
+          "
+        >
           <div class="icon">
             <v-icon large color="white">
               mdi-face
             </v-icon>
           </div>
         </div>
-        <div class="content d-flex align-center">
+        <div
+          class="content d-flex align-center"
+          @click.stop="
+            handleClickDetail(index);
+            detail_nutritionist = true;
+          "
+        >
           <div class="judul">{{ item.nama }}</div>
         </div>
         <div
@@ -88,17 +99,69 @@
         </div>
       </div>
     </div>
-    <v-dialog
-      v-model="detail_nutritionist"
-      max-width="290"
-    >
-      <v-card>
-        <v-card-title class="headline">
-          {{ detail.nama }}
-        </v-card-title>
-
-        <v-card-text>
-          Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+    <v-dialog v-model="detail_nutritionist" max-width="90%">
+      <v-card dark color="#28190E" class="dialog-card">
+        <div class="close-dialog-wrapper">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <v-card-text class="white--text">
+          <v-row class="align-center">
+            <v-col class="col-6 col-md-4">
+              <div class="detail-image">
+                <v-img min-height="200px" :src="detail.image"></v-img>
+              </div>
+            </v-col>
+            <v-col class="col-6 col-md-8">
+              <div class="detail-wrapper">
+                <div class="detail-title">
+                  Name
+                </div>
+                <div class="detail-subtitle">
+                  {{ detail.nama }}
+                </div>
+              </div>
+              <div class="detail-wrapper">
+                <div class="detail-title">
+                  Hospital
+                </div>
+                <div class="detail-subtitle">
+                  {{ detail.rumah_sakit }}
+                </div>
+              </div>
+              <div class="detail-wrapper">
+                <div class="detail-title">
+                  Experience
+                </div>
+                <div class="detail-subtitle">
+                  {{ detail.pengalaman }}
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="col-12">
+              <div class="rating-wrapper">
+                <div class="rating-title">
+                  Rating and Reviews
+                </div>
+                <div class="rating-subtitle">{{ detail.rating }} / 5</div>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row class="review-row">
+            <v-col class="col-12">
+              <div class="review-wrapper">
+                <div class="review-name">
+                  {{ detail.review_nama }}
+                </div>
+                <div class="review-content">
+                  {{ detail.review_konten }}
+                </div>
+              </div>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -147,7 +210,7 @@ export default {
   },
   methods: {
     handleClickDetail(index) {
-      this.detail.nama = this.daftar_nutritionist[index].nama
+      this.detail = this.daftar_nutritionist[index];
     },
     async logout() {
       try {
@@ -294,6 +357,65 @@ export default {
 .icon-hubungi-wrapper {
   opacity: 0.25;
   transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.dialog-card {
+  border-radius: 10px !important;
+}
+
+.close-dialog-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.detail-image .v-image {
+  border-radius: 10px !important;
+}
+
+.detail-title {
+  font-size: 12px;
+  opacity: 0.7;
+  font-family: Nunito;
+}
+
+.detail-subtitle {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-family: Roboto;
+}
+
+.rating-title {
+  opacity: 0.7;
+  font-size: 16px;
+  font-family: Nunito;
+}
+
+.rating-subtitle {
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Roboto;
+  margin-top: 5px;
+}
+
+.review-row {
+  background: #fffcf2;
+  border-radius: 10px;
+}
+
+.review-name {
+  color: #28190e;
+  font-weight: bold;
+  font-family: Roboto;
+}
+
+.review-content {
+  font-size: 14px;
+  font-family: Nunito;
+  font-weight: 400;
+  color: #28190e;
 }
 </style>
 
