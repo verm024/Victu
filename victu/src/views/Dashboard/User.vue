@@ -1,7 +1,4 @@
 <template>
-  <!-- <div class="user d-flex align-center flex-column">
-    
-  </div> -->
   <v-container>
     <Welcome />
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-container>
         <Welcome />
         
         <div class="text-center">
@@ -8,7 +8,7 @@
             <h6 class="my-5 text-h6">OR</h6>
             <Button text="Plot Calorie Graph" />
         </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
