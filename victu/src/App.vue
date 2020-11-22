@@ -53,9 +53,29 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-main class="main">
+    <v-main class="main py-10">
       <router-view></router-view>
     </v-main>
+
+    <v-bottom-navigation fixed>
+      <v-btn value="home">
+        <span>Home</span>
+
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+
+      <v-btn value="calorie">
+        <span>Calorie</span>
+
+        <v-icon>mdi-food</v-icon>
+      </v-btn>
+
+      <v-btn value="consoltation">
+        <span>Consultation</span>
+
+        <v-icon>mdi-account-box</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-app>
 </template>
 

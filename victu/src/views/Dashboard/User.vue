@@ -17,6 +17,7 @@
           [560, 2],
           [768, 3]
         ]"
+        :navigationEnabled="true"
       >
         <RecommendedFood
           v-for="(food, i) in foodRecommendations"
