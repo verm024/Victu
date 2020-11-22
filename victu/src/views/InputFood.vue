@@ -1,47 +1,80 @@
 <template>
-  <!-- <div class="input-food">
-    Input new food
-    <v-autocomplete
-      v-model="food_dipilih"
-      :items="foods"
-      outlined
-      dense
-      label="Outlined"
-      multiple
-      item-text="food_name"
-      :search-input.sync="search"
-      return-object
-    ></v-autocomplete>
-  </div> -->
-  <v-container>
+  <v-container class="input-food">
     <Welcome />
 
     <div>
-      <SectionHeader header="Ideal Calorie" />
-      <p>Your Ideal Clorie <strong>900 calories</strong></p>
-      <SectionHeader header="Check Food Calorie" />
-
-      <div v-for="i in nFoods" :key="i" class="d-flex flex-column flex-md-row">
-        <v-text-field
-          class="mr-5"
+      <SectionHeader header="Check Ideal Calorie" />
+      <div class="input-ideal">
+        <v-select
           dense
-          label="Food"
-          type="text"
+          label="Activity Level"
           outlined
           color="#28190E"
-        ></v-text-field>
+          item-color="#28190E"
+          :items="levels"
+          v-model="ideal.aktivitas"
+        ></v-select>
         <v-text-field
           dense
-          label="Quantity"
+          label="Weight (kg)"
           type="number"
           outlined
           color="#28190E"
+          v-model="ideal.berat"
+        ></v-text-field>
+        <v-text-field
+          dense
+          label="Height (cm)"
+          type="number"
+          outlined
+          color="#28190E"
+          v-model="ideal.tinggi"
         ></v-text-field>
       </div>
-      <button @click="increaseNFood" class="mr-5 font-weight-bold">
-        Add more
-      </button>
-      <Button text="Calculate" className="pa-3" />
+      <Button text="Check Ideal" @click.native="checkIdeal" className="pa-3" />
+      <p class="ideal-calorie">
+        Your Ideal Calorie:
+        <strong
+          >{{
+            userProfile.kalori_ideal ? userProfile.kalori_ideal.toFixed(2) : 0
+          }}
+          calories</strong
+        >
+      </p>
+      <SectionHeader header="Check Food Calorie" />
+
+      <div class="d-flex flex-column flex-md-row input-autocomplete-food">
+        <v-autocomplete
+          v-model="food_dipilih"
+          :items="foods"
+          outlined
+          dense
+          label="Select Foods"
+          multiple
+          color="#28190E"
+          item-text="food_name"
+          :search-input.sync="search"
+          return-object
+        ></v-autocomplete>
+      </div>
+      <div class="selected" v-if="food_dipilih.length != 0">
+        <div class="selected-judul">
+          Choosen food:
+        </div>
+        <ul>
+          <li v-for="(item, index) in food_dipilih" :key="index">
+            {{ capitalizeFirstLetter(item.food_name) }} ({{
+              item.full_nutrients[0].value
+            }}
+            cal)
+          </li>
+        </ul>
+      </div>
+      <p v-if="melebihi" class="calorie-exceed">
+        <strong style="color: red">Warning!</strong> <br />
+        Your total food calories has exceeded your ideal calorie! Please take
+        care of your calorie intake.
+      </p>
     </div>
   </v-container>
 </template>
@@ -60,7 +93,8 @@ export default {
   components: {
     // SectionHeader,
     Button,
-    Welcome
+    Welcome,
+    SectionHeader
   },
   data() {
     return {
@@ -69,11 +103,28 @@ export default {
       food_dipilih: [],
       foods: [],
       nFoods: 1,
-      search: ""
+      search: "",
+      levels: ["Low", "Moderate", "High"],
+      ideal: {
+        aktivitas: "Moderate",
+        berat: 0,
+        tinggi: 0
+      }
     };
   },
   computed: {
     ...mapState(["currentUser", "userProfile"])
+  },
+  mounted() {
+    this.ideal.berat = this.userProfile.berat
+      ? parseInt(this.userProfile.berat)
+      : 0;
+    this.ideal.tinggi = this.userProfile.tinggi
+      ? parseInt(this.userProfile.tinggi)
+      : 0;
+    this.ideal.aktivitas = this.userProfile.aktivitas
+      ? this.userProfile.aktivitas
+      : "Moderate";
   },
   methods: {
     calculateCalorie() {
@@ -84,8 +135,54 @@ export default {
         }
       });
     },
-    increaseNFood() {
-      this.nFoods++;
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    async getAge(seconds) {
+      var today = new Date();
+      var birthDate = new Date(seconds * 1000);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    },
+    async checkIdeal() {
+      let factor = 1;
+      if (this.ideal.aktivitas == "Low") {
+        factor = 1.2;
+      } else if (this.ideal.aktivitas == "Moderate") {
+        factor = 1.3;
+      } else {
+        factor = 1.4;
+      }
+      let age = await this.getAge(this.userProfile.tanggal_lahir.seconds);
+      let idealCalorie = 0;
+      if (this.userProfile.gender == "Male") {
+        idealCalorie =
+          (factor * (66.5 + 13.8 * this.ideal.berat + 5 * this.ideal.tinggi)) /
+          (6.8 * age);
+      } else {
+        idealCalorie =
+          (factor *
+            (655.1 + 9.6 * this.ideal.berat + 1.9 * this.ideal.tinggi)) /
+          (4.7 * age);
+      }
+      try {
+        await firebase.db
+          .collection("users")
+          .doc(this.currentUser.uid)
+          .update({
+            kalori_ideal: idealCalorie,
+            berat: this.ideal.berat,
+            tinggi: this.ideal.tinggi,
+            aktivitas: this.ideal.aktivitas
+          });
+        this.$store.dispatch("fetchUserProfile");
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
   watch: {
@@ -117,9 +214,41 @@ export default {
         this.food_dipilih[index].full_nutrients = newVal;
       });
       this.calculateCalorie();
+    },
+    total_kalori: {
+      handler() {
+        if (!this.userProfile.kalori_ideal) {
+          this.userProfile.kalori_ideal = 0;
+        } else {
+          if (this.userProfile.kalori_ideal < this.total_kalori) {
+            this.melebihi = true;
+          } else {
+            this.melebihi = false;
+          }
+        }
+      }
     }
   }
 };
 </script>
 
-<style></style>
+<style scoped>
+.selected {
+  margin-top: -10px;
+}
+
+.ideal-calorie {
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.calorie-exceed {
+  margin-top: 15px;
+}
+</style>
+
+<style>
+.input-food .input-autocomplete-food .v-select__selection {
+  display: none !important;
+}
+</style>
