@@ -10,7 +10,8 @@
           $route.name != 'Login' &&
           $route.name != 'Register' &&
           $route.name != 'Detail Pesan' &&
-          $route.name != 'Search Nutritionist'
+          $route.name != 'Search Nutritionist' &&
+          $route.name != 'Detail Content'
       "
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>

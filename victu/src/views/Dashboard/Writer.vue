@@ -6,7 +6,7 @@
     <br />
     <br />
     Daftar Konten Menunggu proofreading
-    <div v-for="(item, index) in filterProofreading" :key="index">
+    <div v-for="item in filterProofreading" :key="item.id">
       <router-link :to="'/content/' + item.id">
         Judul: {{ item.judul }}, Isi: {{ item.isi }}
       </router-link>
@@ -17,7 +17,7 @@
     <br />
     <br />
     Daftar Konten Sudah Diposting/disetujui
-    <div v-for="(item, index) in filterPosted" :key="index">
+    <div v-for="item in filterPosted" :key="item.id">
       <router-link :to="'/content/' + item.id">
         Judul: {{ item.judul }}, Isi: {{ item.isi }}
       </router-link>
@@ -28,7 +28,7 @@
     <br />
     <br />
     Daftar Konten Sudah Dihapus
-    <div v-for="(item, index) in filterDeleted" :key="index">
+    <div v-for="item in filterDeleted" :key="item.id">
       <router-link :to="'/content/' + item.id">
         Judul: {{ item.judul }}, Isi: {{ item.isi }}
       </router-link>
