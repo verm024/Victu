@@ -1,23 +1,56 @@
 <template>
-  <div class="pesan">
-    daftar pesan masuk
-    <div v-for="(item, index) in daftar_pesan" :key="index">
-      <router-link :to="'/chat/' + item.id">
-        <div class="content" v-if="userProfile.role == 'user'">
-          <div class="judul">{{ item.nutritionist.email }}</div>
-          <div class="deskripsi" v-if="last_pesan[index]">
-            {{ last_pesan[index].content.slice(0, 20) }}
-          </div>
-        </div>
-        <div class="content" v-else-if="userProfile.role == 'nutritionist'">
-          <div class="judul">
-            {{ item.user.email }}
-          </div>
-          <div class="deskripsi" v-if="last_pesan[index]">
-            {{ last_pesan[index].content.slice(0, 20) }}
-          </div>
-        </div>
+  <div class="pesan container" style="margin-top: 90px">
+    <div
+      class="new-consultation"
+      v-if="userProfile.role == 'user' && daftar_pesan.length != 0"
+    >
+      <router-link to="/search-nutritionist">
+        Start a <u>new consultation!</u>
       </router-link>
+    </div>
+    <div
+      class="card-pesan"
+      v-for="(item, index) in daftar_pesan"
+      :key="index"
+      @click="$router.push('/chat/' + item.id)"
+    >
+      <div class="icon-wrapper">
+        <div class="icon">
+          <v-icon large color="white">
+            mdi-face
+          </v-icon>
+        </div>
+      </div>
+      <div class="content" v-if="userProfile.role == 'nutritionist'">
+        <div class="judul">{{ item.user.nama }}</div>
+        <div class="deskripsi" v-if="last_pesan[index]">
+          {{ last_pesan[index].content.slice(0, 20) }}
+        </div>
+        <div class="time">{{ formatDate(item.tanggal_chat.seconds) }}</div>
+      </div>
+      <div class="content" v-else-if="userProfile.role == 'user'">
+        <div class="judul">
+          {{ item.nutritionist.nama }}
+        </div>
+        <div class="deskripsi" v-if="last_pesan[index]">
+          {{ last_pesan[index].content.slice(0, 20) }}
+        </div>
+        <div class="time">{{ formatDate(item.tanggal_chat.seconds) }}</div>
+      </div>
+    </div>
+    <div
+      v-if="daftar_pesan.length == 0 && userProfile.role == 'user'"
+      class="empty"
+    >
+      <router-link to="/search-nutritionist">
+        <span>No message yet,</span> <u>start a new consultation!</u>
+      </router-link>
+    </div>
+    <div
+      v-else-if="daftar_pesan.length == 0 && userProfile.role == 'nutritionist'"
+      class="empty"
+    >
+      No message yet
     </div>
   </div>
 </template>
@@ -35,6 +68,23 @@ export default {
   },
   computed: {
     ...mapState(["currentUser", "userProfile"])
+  },
+  methods: {
+    formatDate(timestamp) {
+      let date = new Date(timestamp * 1000);
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      if (hours < 10) {
+        hours = 0 + hours.toString();
+      }
+      if (minutes < 10) {
+        minutes = 0 + minutes.toString();
+      }
+      date = date.getDate();
+      return date + "-" + month + "-" + year + " " + hours + ":" + minutes;
+    }
   },
   watch: {
     get_daftar_pesan: {
@@ -119,4 +169,87 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.new-consultation {
+  margin-bottom: 30px;
+}
+
+.new-consultation a {
+  font-family: Roboto;
+  font-weight: 500 !important;
+  font-size: 18px;
+  color: #28190e;
+}
+
+.new-consultation a u {
+  color: #f7b516;
+}
+
+.card-pesan {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #f1f4f2;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 2px 4px 30px rgba(247, 181, 22, 0.1);
+  margin-bottom: 20px;
+}
+
+.content {
+  margin-left: 20px;
+  width: 100%;
+}
+
+.icon {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  background: #f7b516;
+  border-radius: 100px;
+  justify-content: center;
+}
+
+.judul {
+  color: #28190e;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.pesan .deskripsi {
+  font-family: Nunito;
+  font-weight: normal;
+  font-size: 16px;
+  margin-top: 5px;
+  color: #28190e;
+  opacity: 0.7;
+}
+
+.time {
+  width: fit-content;
+  margin-left: auto;
+  font-size: 12px;
+  color: #89969f;
+  font-weight: 300;
+  margin-top: 10px;
+  font-family: Nunito;
+}
+
+.empty {
+  text-align: center;
+}
+
+.empty a span {
+  font-size: 16px;
+  color: #28190e;
+  opacity: 0.8;
+}
+
+.empty a u {
+  font-size: 16px;
+  color: #f7b516;
+  font-weight: 500 !important;
+}
+</style>

@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import Welcome from '../components/Welcome'
-import Button from '../components/Button'
+import Welcome from "../components/Welcome";
+import Button from "../components/Button";
 
 export default {
-    components: {
-        Button,
-        Welcome
-    }
-}
+  components: {
+    Button,
+    Welcome
+  }
+};
 </script>

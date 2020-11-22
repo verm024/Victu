@@ -1,6 +1,6 @@
 <template>
   <div class="detail-pesan" v-if="informasi_pesan.user">
-    <v-app-bar color="28190E" dense dark fixed>
+    <v-app-bar color="#28190E" dense dark fixed>
       <v-app-bar-nav-icon @click="back">
         <v-icon>mdi-chevron-left</v-icon>
       </v-app-bar-nav-icon>
@@ -26,7 +26,7 @@
             class="sender"
             v-if="informasi_pesan.user && item.sender == 'user'"
           >
-            user {{ informasi_pesan.user.nama }}
+            {{ informasi_pesan.user.nama }}
           </div>
           <div
             class="sender"
@@ -230,6 +230,8 @@ export default {
   font-size: 16px;
   color: #28190e;
   opacity: 0.7;
+  font-family: Nunito;
+  font-weight: normal;
 }
 
 .time {
@@ -239,6 +241,7 @@ export default {
   color: #89969f;
   font-weight: 300;
   margin-top: 20px;
+  font-family: Nunito;
 }
 
 .list-pesan {
