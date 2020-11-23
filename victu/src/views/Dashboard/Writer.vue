@@ -1,78 +1,42 @@
 <template>
-  <!-- <div class="writer">
-    Dashboard Writer
-    <br />
-    <router-link to="/add-content">Buat konten baru</router-link>
-    <br />
-    <br />
-    Daftar Konten Menunggu proofreading
-    <div v-for="item in filterProofreading" :key="item.id">
-      <router-link :to="'/content/' + item.id">
-        Judul: {{ item.judul }}, Isi: {{ item.isi }}
-      </router-link>
-    </div>
-    <div v-if="filterProofreading.length == 0">
-      Belum ada
-    </div>
-    <br />
-    <br />
-    Daftar Konten Sudah Diposting/disetujui
-    <div v-for="item in filterPosted" :key="item.id">
-      <router-link :to="'/content/' + item.id">
-        Judul: {{ item.judul }}, Isi: {{ item.isi }}
-      </router-link>
-    </div>
-    <div v-if="filterPosted.length == 0">
-      Belum ada
-    </div>
-    <br />
-    <br />
-    Daftar Konten Sudah Dihapus
-    <div v-for="item in filterDeleted" :key="item.id">
-      <router-link :to="'/content/' + item.id">
-        Judul: {{ item.judul }}, Isi: {{ item.isi }}
-      </router-link>
-    </div>
-    <div v-if="filterDeleted.length == 0">
-      Belum ada
-    </div>
-  </div> -->
   <v-container>
     <Welcome :user="user" />
 
-    <div class="mb-15">
+    <div class="mb-7">
       <SectionHeader header="Requested" />
       <carousel
         :perPageCustom="[
-          [330, 1],
+          [330, 1.2],
           [560, 2],
           [768, 3]
         ]"
-        :navigationEnabled="true"
+        :paginationEnabled="false"
       >
-        <Article
-          v-for="(article, i) in requestedArticles"
-          :key="i"
-          :article="article"
-        />
+        <slide class="mr-3" v-for="(article, i) in filterProofreading" :key="i">
+          <Article
+            :article="article"
+            @click.native="$router.push('/content/' + article.id)"
+          />
+        </slide>
       </carousel>
     </div>
 
-    <div class="mb-15">
+    <div class="mb-16">
       <SectionHeader header="Published" />
       <carousel
         :perPageCustom="[
-          [330, 1],
+          [330, 1.2],
           [560, 2],
           [768, 3]
         ]"
-        :navigationEnabled="true"
+        :paginationEnabled="false"
       >
-        <Article
-          v-for="(article, i) in publishedArticles"
-          :key="i"
-          :article="article"
-        />
+        <slide class="mr-5" v-for="(article, i) in filterPosted" :key="i">
+          <Article
+            :article="article"
+            @click.native="$router.push('/content/' + article.id)"
+          />
+        </slide>
       </carousel>
     </div>
   </v-container>
@@ -85,14 +49,15 @@ import { mapState } from "vuex";
 import SectionHeader from "../../components/SectionHeader";
 import Welcome from "../../components/Welcome";
 import Article from "../../components/Article";
-import { Carousel } from "vue-carousel";
+import { Carousel, Slide } from "vue-carousel";
 
 export default {
   components: {
     SectionHeader,
     Welcome,
     Article,
-    Carousel
+    Carousel,
+    Slide
   },
   data() {
     return {

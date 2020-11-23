@@ -1,35 +1,31 @@
 <template>
-  <slide class="mr-3">
-    <v-card class="mx-auto" max-width="300">
-      <img
-        class="article__image"
-        :src="require(`@/assets/images/${article.src}`)"
-        alt=""
-      />
+  <v-card class="mr-auto" width="300" flat>
+    <v-img
+      class="article__image"
+      :src="article.foto"
+      width="300px"
+      height="170px"
+      ><v-overlay absolute></v-overlay
+    ></v-img>
 
-      <div class="pa-3">
-        <div class="card-title">
-          <strong>{{ article.title }}</strong>
-        </div>
-        <div class="card-subtitle grey--text article__details">
-          {{ article.details }}
-        </div>
+    <div class="pa-3">
+      <div class="card-title">
+        <strong>{{ article.judul }}</strong>
       </div>
-    </v-card>
-  </slide>
+      <div class="card-subtitle grey--text article__details">
+        {{ article.isi }}
+      </div>
+    </div>
+  </v-card>
 </template>
 
 <script>
-import { Slide } from "vue-carousel";
 export default {
-  props: ["article"],
-  components: {
-    Slide
-  }
+  props: ["article"]
 };
 </script>
 
-<style>
+<style scoped>
 .article__image {
   width: 100%;
   height: auto;
@@ -41,5 +37,13 @@ export default {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   margin-bottom: 20px !important;
+  max-height: 24px;
+}
+</style>
+
+<style>
+.article__image .v-overlay__scrim {
+  background-color: #f7b516 !important;
+  opacity: 0.1 !important;
 }
 </style>

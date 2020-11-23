@@ -17,17 +17,18 @@
       <SectionHeader header="Food Recommendation" />
       <carousel
         :perPageCustom="[
-          [330, 1],
+          [330, 1.2],
           [560, 2],
           [768, 3]
         ]"
-        :navigationEnabled="true"
+        :paginationEnabled="false"
       >
+      <slide class="mr-5" v-for="(food, i) in foodRecommendations" :key="i">
         <RecommendedFood
-          v-for="(food, i) in foodRecommendations"
-          :key="i"
           :food="food"
         />
+      </slide>
+        
       </carousel>
     </div>
   </v-container>
