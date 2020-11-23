@@ -4,7 +4,14 @@
   >
     <div>
       <h3 class="text-h5 text-sm-h3 mb-2">
-        Welcome, <strong>{{ user.nama.split(" ")[0] }}</strong>
+        Welcome,
+        <strong>{{
+          userProfile.role == "nutritionist"
+            ? userProfile.nama.split(" ")[0] +
+              " " +
+              userProfile.nama.split(" ")[1]
+            : userProfile.nama.split(" ")[0]
+        }}</strong>
       </h3>
       <!-- <p class="gray--text">{{ user.kalori_ideal }} calories today</p> -->
     </div>
