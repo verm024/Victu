@@ -172,6 +172,24 @@ export default {
             .doc(this.currentUser.uid)
             .collection("calorie")
             .add({ tanggal_input: today, total_kalori: this.total_kalori });
+          await firebase.db
+            .collection("users")
+            .doc(this.currentUser.uid)
+            .collection("calorie")
+            .doc(newDoc.id)
+            .collection("inputs")
+            .add({
+              total_kalori: this.total_kalori,
+              makanan: this.food_dipilih
+            });
+          await firebase.db
+            .collection("users")
+            .doc(this.currentUser.uid)
+            .collection("calorie")
+            .doc(newDoc.id)
+            .update({
+              total_kalori: this.kalori_hari.total_kalori + this.total_kalori
+            });
         } else {
           await firebase.db
             .collection("users")
@@ -192,6 +210,7 @@ export default {
               total_kalori: this.kalori_hari.total_kalori + this.total_kalori
             });
         }
+        this.$router.push("/user");
       } catch (error) {
         console.error(error);
       }

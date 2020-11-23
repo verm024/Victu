@@ -12,7 +12,7 @@
       <h6 class="my-3 text-h6">or</h6>
       <Button
         text="Plot Calorie Graph"
-        @click.native="$router.push('/calorie-graph')"
+        @click.native="$router.push('/plot-calorie')"
         className="pa-5"
       />
     </div>
