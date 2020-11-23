@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mr-auto mt-5" width="300" flat>
+  <v-card :class="search ? 'mx-auto mb-5' : 'mr-auto'" width="300" flat>
     <v-img
       class="article__image"
       :src="article.foto"
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  props: ["article"]
+  props: ["article", "search"]
 };
 </script>
 

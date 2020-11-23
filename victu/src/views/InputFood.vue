@@ -41,7 +41,7 @@
           calories</strong
         >
       </p>
-      <SectionHeader header="Check Food Calorie" />
+      <SectionHeader header="Input Food" />
 
       <div class="d-flex flex-column flex-md-row input-autocomplete-food">
         <v-autocomplete

@@ -100,13 +100,13 @@ export default {
   methods: {
     featureClick(event, index) {
       if (event.feature == "Check Calorie") {
-        this.$router.push("/calorie");
+        this.$router.push("/input-food");
       } else if (event.feature == "Healthy Contents") {
         this.$router.push("/search-content");
       } else if (event.feature == "1-on-1 Consultation") {
         this.$router.push("/chat");
       } else if (event.feature == "Plot Daily Calorie") {
-        this.$router.push("");
+        this.$router.push("/plot-calorie");
       }
     }
   }

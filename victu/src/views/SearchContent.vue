@@ -1,20 +1,15 @@
 <template>
-  <v-container>
+  <v-container class="search-content">
     <Welcome :user="user" />
-    <div class="search-nutritionist">
+    <div>
       <SectionHeader header="Serve you with the best" />
-      <!-- <div v-for="(item, index) in daftar_konten" :key="index">
-        <router-link :to="'/content/' + item.id">
-          {{ item.judul }}
-          {{ item.isi }}
-          {{ item.id }}
-        </router-link>
-      </div> -->
       <div class="d-flex flex-wrap">
         <Article
           v-for="(item, index) in daftar_konten"
           :key="index"
           :article="item"
+          :search="true"
+          @click.native="$router.push('/content/' + item.id)"
         />
       </div>
     </div>
@@ -62,4 +57,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.search-content {
+  margin-bottom: 70px;
+}
+</style>
