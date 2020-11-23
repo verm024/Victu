@@ -18,27 +18,39 @@
 
       <v-toolbar-title>Dashboard</v-toolbar-title>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" fixed temporary>
+    <v-navigation-drawer
+      v-model="drawer"
+      fixed
+      temporary
+      v-if="
+        $route.name != 'Home' &&
+          $route.name != 'Login' &&
+          $route.name != 'Register' &&
+          $route.name != 'Pesan' &&
+          $route.name != 'Search Nutritionist' &&
+          $route.name != 'Detail Content'
+      "
+    >
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
           active-class="black--text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item :to="'/' + userProfile.role">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/profile">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Profile</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item @click="handleClickHelp">
             <v-list-item-icon>
               <v-icon>mdi-help</v-icon>
             </v-list-item-icon>
@@ -149,6 +161,9 @@ export default {
       this.$store.commit("setCurrentUser", null);
       this.$store.commit("setUserProfile", null);
       this.$router.push("/login");
+    },
+    async handleClickHelp() {
+      console.log("Help clicked");
     }
   },
   computed: {

@@ -29,21 +29,21 @@
           v-model="group"
           active-class="black--text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item :to="'/' + userProfile.role">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/profile">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Profile</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item @click="handleClickHelp">
             <v-list-item-icon>
               <v-icon>mdi-help</v-icon>
             </v-list-item-icon>
@@ -211,6 +211,9 @@ export default {
   methods: {
     handleClickDetail(index) {
       this.detail = this.daftar_nutritionist[index];
+    },
+    async handleClickHelp() {
+      console.log("Help clicked");
     },
     async logout() {
       try {
