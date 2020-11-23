@@ -12,10 +12,10 @@
       </div> -->
       <div class="d-flex flex-wrap">
         <Article
-            v-for="(item, index) in daftar_konten" 
-            :key="index"
-            :article="item"
-          />
+          v-for="(item, index) in daftar_konten"
+          :key="index"
+          :article="item"
+        />
       </div>
     </div>
   </v-container>

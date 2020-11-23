@@ -3,7 +3,10 @@
     <Welcome :user="data_user" />
     <div class="mb-7">
       <SectionHeader header="What do you want to do?" />
-      <div style="overflow-x: auto;" class="d-flex features-row mb-3">
+      <div
+        style="overflow-x: auto; justify-content: space-between"
+        class="d-flex features-row mb-3"
+      >
         <Feature
           v-for="(feature, i) in features"
           v-on:click.native="featureClick(feature, i)"
@@ -23,12 +26,9 @@
         ]"
         :paginationEnabled="false"
       >
-      <slide class="mr-5" v-for="(food, i) in foodRecommendations" :key="i">
-        <RecommendedFood
-          :food="food"
-        />
-      </slide>
-        
+        <slide class="mr-5" v-for="(food, i) in foodRecommendations" :key="i">
+          <RecommendedFood :food="food" />
+        </slide>
       </carousel>
     </div>
   </v-container>
@@ -39,8 +39,9 @@ import SectionHeader from "../../components/SectionHeader";
 import Feature from "../../components/Feature";
 import RecommendedFood from "../../components/RecommendedFood";
 import Welcome from "../../components/Welcome";
-import { Carousel } from "vue-carousel";
+import { Carousel, Slide } from "vue-carousel";
 import store from "../../store";
+import firebase from "../../firebase";
 
 export default {
   components: {
@@ -48,7 +49,29 @@ export default {
     Feature,
     RecommendedFood,
     Welcome,
-    Carousel
+    Carousel,
+    Slide
+  },
+  async created() {
+    let randomIndex = [];
+    while (randomIndex.length < 5) {
+      let random = Math.floor(Math.random() * 15 + 1);
+      if (!randomIndex.includes(random)) {
+        randomIndex.push(random);
+      }
+    }
+    for (let i = 0; i < randomIndex.length; i++) {
+      try {
+        let doc = await firebase.db
+          .collection("rekomendasi")
+          .doc(randomIndex[i].toString())
+          .get();
+        let data = doc.data();
+        this.foodRecommendations.push(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
   data() {
     return {
@@ -70,23 +93,7 @@ export default {
           src: "feature2.png"
         }
       ],
-      foodRecommendations: [
-        {
-          name: "Fried Chicken",
-          calories: "700 calories",
-          src: "food.png"
-        },
-        {
-          name: "Fried Chicken",
-          calories: "700 calories",
-          src: "food.png"
-        },
-        {
-          name: "Fried Chicken",
-          calories: "700 calories",
-          src: "food.png"
-        }
-      ],
+      foodRecommendations: [],
       data_user: store.state.userProfile
     };
   },

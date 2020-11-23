@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="300">
+  <v-card class="mr-auto" max-width="300" flat>
     <v-img
       class="recommendedFood__image"
       :src="food.foto"
@@ -12,15 +12,16 @@
       <div class="card-title">
         <strong>{{ food.nama }}</strong>
       </div>
-      <div class="card-subtitle grey--text recommendedFood__details">{{ food.kalori }}</div>
+      <div class="card-subtitle grey--text recommendedFood__details">
+        {{ food.kalori }} calories
+      </div>
     </div>
   </v-card>
 </template>
 
 <script>
-
 export default {
-  props: ["food"],
+  props: ["food"]
 };
 </script>
 
