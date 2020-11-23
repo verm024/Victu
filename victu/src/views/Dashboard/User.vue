@@ -1,11 +1,14 @@
 <template>
   <v-container>
-    <Welcome />
-
+    <Welcome :user="data_user"/>
     <div class="mb-15">
       <SectionHeader header="What do you want to do?" />
       <v-row class="features-row mb-3">
-        <Feature v-for="(feature, i) in features" :key="i" :feature="feature" />
+        <Feature 
+        v-for="(feature, i) in features" 
+        v-on:click.native="featureClick(feature, i)" 
+        :key="i" 
+        :feature="feature" />
       </v-row>
     </div>
 
@@ -35,6 +38,7 @@ import Feature from "../../components/Feature";
 import RecommendedFood from "../../components/RecommendedFood";
 import Welcome from "../../components/Welcome";
 import { Carousel } from "vue-carousel";
+import store from "../../store";
 
 export default {
   components: {
@@ -80,8 +84,22 @@ export default {
           calories: "700 calories",
           src: "food.png"
         }
-      ]
+      ],
+      data_user: store.state.userProfile,
     };
+  },
+  methods: {
+    featureClick(event, index) {
+      if (event.feature == "Check Calorie") {
+        this.$router.push("/ideal-calorie")
+      } else if (event.feature == "Healthy Contents") {
+        this.$router.push("/search-content")
+      } else if (event.feature == "1-on-1 Consultation") {
+        this.$router.push("/search-nutritionist")
+      } else if (event.feature == "Plot Daily Calorie") {
+        this.$router.push("")
+      }
+    }
   }
 };
 </script>
