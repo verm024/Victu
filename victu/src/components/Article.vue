@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mr-auto" width="300" flat>
+  <v-card class="mr-auto mt-5" width="300" flat>
     <v-img
       class="article__image"
       :src="article.foto"
