@@ -1,14 +1,15 @@
 <template>
   <v-container>
-    <Welcome :user="data_user"/>
+    <Welcome :user="data_user" />
     <div class="mb-15">
       <SectionHeader header="What do you want to do?" />
       <v-row class="features-row mb-3">
-        <Feature 
-        v-for="(feature, i) in features" 
-        v-on:click.native="featureClick(feature, i)" 
-        :key="i" 
-        :feature="feature" />
+        <Feature
+          v-for="(feature, i) in features"
+          v-on:click.native="featureClick(feature, i)"
+          :key="i"
+          :feature="feature"
+        />
       </v-row>
     </div>
 
@@ -85,19 +86,19 @@ export default {
           src: "food.png"
         }
       ],
-      data_user: store.state.userProfile,
+      data_user: store.state.userProfile
     };
   },
   methods: {
     featureClick(event, index) {
       if (event.feature == "Check Calorie") {
-        this.$router.push("/ideal-calorie")
+        this.$router.push("/ideal-calorie");
       } else if (event.feature == "Healthy Contents") {
-        this.$router.push("/search-content")
+        this.$router.push("/search-content");
       } else if (event.feature == "1-on-1 Consultation") {
-        this.$router.push("/search-nutritionist")
+        this.$router.push("/search-nutritionist");
       } else if (event.feature == "Plot Daily Calorie") {
-        this.$router.push("")
+        this.$router.push("");
       }
     }
   }

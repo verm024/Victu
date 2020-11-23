@@ -50,8 +50,11 @@
         ]"
         :navigationEnabled="true"
       >
-        
-        <Article v-for="(article, i) in requestedArticles" :key="i" :article="article" />
+        <Article
+          v-for="(article, i) in requestedArticles"
+          :key="i"
+          :article="article"
+        />
       </carousel>
     </div>
 
@@ -65,10 +68,13 @@
         ]"
         :navigationEnabled="true"
       >
-        <Article v-for="(article, i) in publishedArticles" :key="i" :article="article" />
+        <Article
+          v-for="(article, i) in publishedArticles"
+          :key="i"
+          :article="article"
+        />
       </carousel>
     </div>
-    
   </v-container>
 </template>
 
@@ -91,42 +97,48 @@ export default {
   data() {
     return {
       user: {
-        nama: "John",
+        nama: "John"
       },
       daftar_konten: "",
       requestedArticles: [
         {
           title: "Sehat tapi Enak, Apa itu?",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
         },
         {
           title: "Sehat tapi Enak, Apa itu?",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
         },
         {
           title: "Sehat tapi Enak, Apa itu?",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
-        },
+        }
       ],
       publishedArticles: [
         {
           title: "Makan Oatmeal Secara Rutin",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
         },
         {
           title: "Makan Oatmeal Secara Rutin",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
         },
         {
           title: "Makan Oatmeal Secara Rutin",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
-        },
+        }
       ]
     };
   },

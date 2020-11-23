@@ -37,10 +37,13 @@
         ]"
         :navigationEnabled="true"
       >
-        <Article v-for="(article, i) in toBeReviewed" :key="i" :article="article" />
+        <Article
+          v-for="(article, i) in toBeReviewed"
+          :key="i"
+          :article="article"
+        />
       </carousel>
     </div>
-    
   </v-container>
 </template>
 
@@ -61,42 +64,45 @@ export default {
   data() {
     return {
       user: {
-        nama: "John",
+        nama: "John"
       },
       reviews: [
         {
           rating: 4.5,
-          reviewer: 'Anna Johnson',
-          date: '15 November 2020',
-          time: '10:30 WIB',
-          review: 'Dokternya baik uwu'
+          reviewer: "Anna Johnson",
+          date: "15 November 2020",
+          time: "10:30 WIB",
+          review: "Dokternya baik uwu"
         },
         {
           rating: 4.5,
-          reviewer: 'Anna Johnson',
-          date: '15 November 2020',
-          time: '10:30 WIB',
-          review: 'Dokternya baik uwu'
+          reviewer: "Anna Johnson",
+          date: "15 November 2020",
+          time: "10:30 WIB",
+          review: "Dokternya baik uwu"
         }
       ],
       toBeReviewed: [
         {
           title: "Sehat tapi Enak, Apa itu?",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
         },
         {
           title: "Sehat tapi Enak, Apa itu?",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
         },
         {
           title: "Sehat tapi Enak, Apa itu?",
-          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          details:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
           src: "food.png"
-        },
-      ],
-    }
+        }
+      ]
+    };
   }
 };
 </script>
