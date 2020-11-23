@@ -38,7 +38,7 @@
     </div>
   </div> -->
   <v-container>
-    <Welcome :name="John" />
+    <Welcome :name="'John'" />
 
     <div class="mb-15">
       <SectionHeader header="Requested" />
