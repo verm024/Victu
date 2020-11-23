@@ -38,7 +38,7 @@
     </div>
   </div> -->
   <v-container>
-    <Welcome :name="'John'" />
+    <Welcome :user="user" />
 
     <div class="mb-15">
       <SectionHeader header="Requested" />
@@ -90,6 +90,9 @@ export default {
   },
   data() {
     return {
+      user: {
+        nama: "John",
+      },
       daftar_konten: "",
       requestedArticles: [
         {

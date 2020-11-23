@@ -32,7 +32,7 @@ export default {
   width: 100%;
   height: auto;
 }
-.article__detail {
+.article__details {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
