@@ -31,7 +31,7 @@
           v-model="ideal.tinggi"
         ></v-text-field>
       </div>
-      <Button text="Check Ideal" @click.native="checkIdeal" className="pa-3" />
+      <Button text="Check Ideal" @click.native="checkIdeal" />
       <p class="ideal-calorie">
         Your Ideal Calorie:
         <strong
@@ -79,7 +79,7 @@
         v-if="food_dipilih.length > 0"
         text="Save"
         @click.native="saveFoodIntake"
-        className="pa-3 mt-4"
+        class="mt-4"
       />
     </div>
   </v-container>
@@ -313,8 +313,7 @@ export default {
 
 <style scoped>
 .input-food {
-  margin-top: 30px;
-  margin-bottom: 40px;
+  margin-bottom: 90px;
 }
 
 .selected {

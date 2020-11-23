@@ -90,8 +90,13 @@ export default {
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
-  color: #daa526;
-  margin-top: 10px;
+  color: #28190e;
+  line-height: 20px;
+  margin-top: 5px;
+}
+
+.features-image img {
+  height: 30px;
 }
 
 .button {
@@ -104,7 +109,6 @@ export default {
   font-weight: bold;
   font-size: 16px;
   text-align: center;
-  background: red;
   background: #f7b516;
   box-shadow: 2px 4px 30px rgba(244, 204, 143, 0.25);
   border-radius: 10px;

@@ -1,7 +1,7 @@
 <template>
-  <button :class="['button white--text rounded-lg', className]">
-    {{ text }}
-  </button>
+  <div class="button">
+    <button>{{ text }}</button>
+  </div>
 </template>
 
 <script>
@@ -11,8 +11,17 @@ export default {
 </script>
 
 <style scoped>
-.button {
+.button button {
+  font-family: Roboto;
+  font-style: normal;
   font-weight: bold;
-  background-color: #f7b516;
+  font-size: 16px;
+  text-align: center;
+  background: red;
+  background: #f7b516;
+  box-shadow: 2px 4px 30px rgba(244, 204, 143, 0.25);
+  border-radius: 10px;
+  color: white;
+  padding: 10px 32px;
 }
 </style>

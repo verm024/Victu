@@ -9,7 +9,7 @@
         $route.name != 'Home' &&
           $route.name != 'Login' &&
           $route.name != 'Register' &&
-          $route.name != 'Detail Pesan' &&
+          $route.name != 'Pesan' &&
           $route.name != 'Search Nutritionist' &&
           $route.name != 'Detail Content'
       "
@@ -55,7 +55,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-main class="main py-10">
+    <v-main class="main">
       <router-view></router-view>
     </v-main>
 
@@ -66,7 +66,7 @@
         $route.name != 'Login' &&
           $route.name != 'Register' &&
           $route.name != 'Home' &&
-          $route.name != 'Detail Pesan'
+          $route.name != 'Pesan'
       "
       fixed
       grow

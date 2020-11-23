@@ -1,5 +1,5 @@
 <template>
-  <div class="pesan container" style="margin-top: 90px">
+  <div class="pesan container mt-15">
     <div
       class="new-consultation"
       v-if="userProfile.role == 'user' && daftar_pesan.length != 0"

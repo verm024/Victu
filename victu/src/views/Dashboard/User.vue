@@ -1,19 +1,19 @@
 <template>
   <v-container>
     <Welcome :user="data_user" />
-    <div class="mb-15">
+    <div class="mb-7">
       <SectionHeader header="What do you want to do?" />
-      <v-row class="features-row mb-3">
+      <div style="overflow-x: auto;" class="d-flex features-row mb-3">
         <Feature
           v-for="(feature, i) in features"
           v-on:click.native="featureClick(feature, i)"
           :key="i"
           :feature="feature"
         />
-      </v-row>
+      </div>
     </div>
 
-    <div class="mb-15">
+    <div class="mb-16">
       <SectionHeader header="Food Recommendation" />
       <carousel
         :perPageCustom="[
@@ -92,11 +92,11 @@ export default {
   methods: {
     featureClick(event, index) {
       if (event.feature == "Check Calorie") {
-        this.$router.push("/ideal-calorie");
+        this.$router.push("/calorie");
       } else if (event.feature == "Healthy Contents") {
         this.$router.push("/search-content");
       } else if (event.feature == "1-on-1 Consultation") {
-        this.$router.push("/search-nutritionist");
+        this.$router.push("/chat");
       } else if (event.feature == "Plot Daily Calorie") {
         this.$router.push("");
       }
