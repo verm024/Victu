@@ -3,12 +3,19 @@
     <Welcome :user="user" />
     <div class="search-nutritionist">
       <SectionHeader header="Serve you with the best" />
-      <div v-for="(item, index) in daftar_konten" :key="index">
+      <!-- <div v-for="(item, index) in daftar_konten" :key="index">
         <router-link :to="'/content/' + item.id">
           {{ item.judul }}
           {{ item.isi }}
           {{ item.id }}
         </router-link>
+      </div> -->
+      <div class="d-flex">
+        <Article
+            v-for="(item, index) in daftar_konten" 
+            :key="index"
+            :article="item"
+          />
       </div>
     </div>
   </v-container>
@@ -19,11 +26,13 @@ import firebase from "../firebase";
 import { mapState } from "vuex";
 import Welcome from "../components/Welcome";
 import SectionHeader from "../components/SectionHeader";
+import Article from "../components/Article";
 
 export default {
   components: {
     Welcome,
-    SectionHeader
+    SectionHeader,
+    Article
   },
   data() {
     return {
