@@ -1,5 +1,5 @@
 <template>
-  <div class="writer">
+  <!-- <div class="writer">
     Dashboard Writer
     <br />
     <router-link to="/add-content">Buat konten baru</router-link>
@@ -36,17 +36,95 @@
     <div v-if="filterDeleted.length == 0">
       Belum ada
     </div>
-  </div>
+  </div> -->
+  <v-container>
+    <Welcome :name="John" />
+
+    <div class="mb-15">
+      <SectionHeader header="Requested" />
+      <carousel
+        :perPageCustom="[
+          [330, 1],
+          [560, 2],
+          [768, 3]
+        ]"
+        :navigationEnabled="true"
+      >
+        
+        <Article v-for="(article, i) in requestedArticles" :key="i" :article="article" />
+      </carousel>
+    </div>
+
+    <div class="mb-15">
+      <SectionHeader header="Published" />
+      <carousel
+        :perPageCustom="[
+          [330, 1],
+          [560, 2],
+          [768, 3]
+        ]"
+        :navigationEnabled="true"
+      >
+        <Article v-for="(article, i) in publishedArticles" :key="i" :article="article" />
+      </carousel>
+    </div>
+    
+  </v-container>
 </template>
 
 <script>
 import firebase from "../../firebase";
 import { mapState } from "vuex";
 
+import SectionHeader from "../../components/SectionHeader";
+import Welcome from "../../components/Welcome";
+import Article from "../../components/Article";
+import { Carousel } from "vue-carousel";
+
 export default {
+  components: {
+    SectionHeader,
+    Welcome,
+    Article,
+    Carousel
+  },
   data() {
     return {
-      daftar_konten: ""
+      daftar_konten: "",
+      requestedArticles: [
+        {
+          title: "Sehat tapi Enak, Apa itu?",
+          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          src: "food.png"
+        },
+        {
+          title: "Sehat tapi Enak, Apa itu?",
+          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          src: "food.png"
+        },
+        {
+          title: "Sehat tapi Enak, Apa itu?",
+          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          src: "food.png"
+        },
+      ],
+      publishedArticles: [
+        {
+          title: "Makan Oatmeal Secara Rutin",
+          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          src: "food.png"
+        },
+        {
+          title: "Makan Oatmeal Secara Rutin",
+          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          src: "food.png"
+        },
+        {
+          title: "Makan Oatmeal Secara Rutin",
+          details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
+          src: "food.png"
+        },
+      ]
     };
   },
   watch: {

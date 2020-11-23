@@ -11,23 +11,8 @@
     </router-link>
   </div> -->
   <v-container>
-    <Welcome />
+    <Welcome :user="data_user" />
 
-    <div class="mb-15">
-      <SectionHeader header="Requested" />
-      <carousel
-        :perPageCustom="[
-          [330, 1],
-          [560, 2],
-          [768, 3]
-        ]"
-        :navigationEnabled="true"
-      >
-        
-        <Article v-for="(article, i) in requestedArticles" :key="i" article="article" />
-      </carousel>
-    </div>
-<!-- 
     <div class="mb-15">
       <SectionHeader header="Published" />
       <carousel
@@ -38,9 +23,9 @@
         ]"
         :navigationEnabled="true"
       >
-        <Article v-for="(article, i) in publishedArticles" :key="i" article="article" />
+        <Article v-for="(article, i) in toBeReviewed" :key="i" :article="article" />
       </carousel>
-    </div> -->
+    </div>
     
   </v-container>
 </template>
@@ -59,7 +44,7 @@ export default {
   },
   data() {
     return {
-      requestedArticles: [
+      toBeReviewed: [
         {
           title: "Sehat tapi Enak, Apa itu?",
           details: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita illo at dignissimos unde, omnis nemo maxime possimus laudantium eos odio, animi blanditiis odit! Placeat aperiam voluptatem iure quia? Qui, minus.",
