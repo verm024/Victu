@@ -36,7 +36,7 @@
         Your Ideal Calorie:
         <strong
           >{{
-            userProfile.kalori_ideal ? userProfile.kalori_ideal.toFixed(2) : 0
+            userProfile.kalori_ideal ? Math.ceil(userProfile.kalori_ideal) : 0
           }}
           calories</strong
         >
@@ -57,7 +57,7 @@
           return-object
         ></v-autocomplete>
       </div>
-      <div class="selected" v-if="food_dipilih.length != 0">
+      <div class="selected" v-if="food_dipilih.length != 0" >
         <div class="selected-judul">
           Choosen food:
         </div>
@@ -70,11 +70,12 @@
           </li>
         </ul>
       </div>
-      <p v-if="melebihi" class="calorie-exceed">
+      <p v-if="melebihi" class="calorie-exceed mb-0">
         <strong style="color: red">Warning!</strong> <br />
         Your total food calories has exceeded your ideal calorie! Please take
         care of your calorie intake.
       </p>
+      <Button v-if="food_dipilih.length > 0" text="Save" @click.native="saveFoodIntake" className="pa-3 mt-4" />
     </div>
   </v-container>
 </template>
@@ -109,7 +110,8 @@ export default {
         aktivitas: "Moderate",
         berat: 0,
         tinggi: 0
-      }
+      },
+      kalori_hari: {}
     };
   },
   computed: {
@@ -148,6 +150,23 @@ export default {
       }
       return age;
     },
+    async saveFoodIntake() {
+      let today = new Date(firebase.timestamp.seconds * 1000)
+      today.setHours(0, 0, 1, 0)
+      today = today / 1000;
+      try {
+        let doc = await firebase.db.collection("users").doc(this.currentUser.uid).collection("calorie").where("tanggal_input", "==", today).get()
+        if (doc.empty) {
+          let newDoc = await firebase.db.collection("users").doc(this.currentUser.uid).collection("calorie").add({tanggal_input: today, total_kalori: this.total_kalori})
+        }
+        else {
+          await firebase.db.collection("users").doc(this.currentUser.uid).collection("calorie").doc(doc.docs[0].id).collection("inputs").add({total_kalori: this.total_kalori, makanan: this.food_dipilih})
+          await firebase.db.collection("users").doc(this.currentUser.uid).collection("calorie").doc(doc.docs[0].id).update({total_kalori: this.kalori_hari.total_kalori + this.total_kalori})
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
     async checkIdeal() {
       let factor = 1;
       if (this.ideal.aktivitas == "Low") {
@@ -161,13 +180,11 @@ export default {
       let idealCalorie = 0;
       if (this.userProfile.gender == "Male") {
         idealCalorie =
-          (factor * (66.5 + 13.8 * this.ideal.berat + 5 * this.ideal.tinggi)) /
-          (6.8 * age);
+          (factor * (66.5 + 13.8 * this.ideal.berat + 5 * this.ideal.tinggi - (6.8 * age)));
       } else {
         idealCalorie =
           (factor *
-            (655.1 + 9.6 * this.ideal.berat + 1.9 * this.ideal.tinggi)) /
-          (4.7 * age);
+            (655.1 + 9.6 * this.ideal.berat + 1.9 * this.ideal.tinggi - (4.7 * age)));
       }
       try {
         await firebase.db
@@ -217,14 +234,30 @@ export default {
     },
     total_kalori: {
       handler() {
+        console.log(this.kalori_hari.total_kalori + this.total_kalori)
         if (!this.userProfile.kalori_ideal) {
           this.userProfile.kalori_ideal = 0;
         } else {
-          if (this.userProfile.kalori_ideal < this.total_kalori) {
+          if (this.userProfile.kalori_ideal < (this.kalori_hari.total_kalori + this.total_kalori)) {
             this.melebihi = true;
           } else {
             this.melebihi = false;
           }
+        }
+      }
+    },
+    get_today_calorie: {
+      immediate: true,
+      async handler () {
+        let today = new Date(firebase.timestamp.seconds * 1000)
+        today.setHours(0, 0, 1, 0)
+        today = today / 1000;
+        let doc = await firebase.db.collection("users").doc(this.currentUser.uid).collection("calorie").where("tanggal_input", "==", today).get()
+        if (doc.empty) {
+          this.kalori_hari.total_kalori = 0
+        }
+        else {
+          this.$bind("kalori_hari", firebase.db.collection("users").doc(this.currentUser.uid).collection("calorie").doc(doc.docs[0].id))
         }
       }
     }
@@ -233,6 +266,11 @@ export default {
 </script>
 
 <style scoped>
+.input-food {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
 .selected {
   margin-top: -10px;
 }

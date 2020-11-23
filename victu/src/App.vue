@@ -65,6 +65,7 @@
       v-if="
         $route.name != 'Login' &&
           $route.name != 'Register' &&
+          $route.name != 'Home' &&
           $route.name != 'Detail Pesan'
       "
       fixed
