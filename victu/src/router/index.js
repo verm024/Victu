@@ -21,6 +21,7 @@ import Nutritionist from "../views/Dashboard/Nutritionist";
 import ProofreadingContent from "../views/ProofreadingContent";
 import Admin from "../views/Dashboard/Admin";
 import Calorie from "../views/Calorie";
+import PlotCalorie from "../views/PlotCalorie";
 
 Vue.use(VueRouter);
 
@@ -121,6 +122,16 @@ const routes = [
       requiresLogin: true,
       allowedRole: "user+admin",
       title: "Search Content"
+    }
+  },
+  {
+    path: "/plot-calorie",
+    name: "PlotCalorie",
+    component: PlotCalorie,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user",
+      title: "Plot Calorie"
     }
   },
   {
