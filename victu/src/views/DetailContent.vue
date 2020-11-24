@@ -207,7 +207,7 @@ export default {
 .nama {
   font-family: Nunito;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   color: #28190e;
   margin-left: 10px;
 }
