@@ -91,13 +91,11 @@ import { mapState } from "vuex";
 import axios from "axios";
 import Welcome from "../components/Welcome";
 import Button from "../components/Button";
-import SectionHeader from "../components/SectionHeader";
 axios.defaults.headers.common["x-app-id"] = "74235cca";
 axios.defaults.headers.common["x-app-key"] = "d3bb7dc8e20ca26ab13f8983c42e95f7";
 
 export default {
   components: {
-    // SectionHeader,
     Button,
     Welcome,
     SectionHeader
