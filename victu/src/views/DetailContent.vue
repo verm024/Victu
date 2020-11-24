@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-content">
+  <div class="detail-content mb-16">
     <v-app-bar color="#28190E" dense dark fixed>
       <v-app-bar-nav-icon @click="back">
         <v-icon>mdi-chevron-left</v-icon>
