@@ -67,6 +67,9 @@
               item.full_nutrients[0].value
             }}
             cal)
+            <v-icon @click="handleClickDelete(index)" color="red">
+              mdi-close
+            </v-icon>
           </li>
         </ul>
       </div>
@@ -140,6 +143,13 @@ export default {
           this.total_kalori += element.full_nutrients[0].value;
         }
       });
+    },
+    handleClickDelete(index) {
+      if (index == 0) {
+        this.food_dipilih.shift();
+      } else {
+        this.food_dipilih.splice(index, index);
+      }
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
