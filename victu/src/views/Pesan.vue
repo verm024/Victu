@@ -1,5 +1,5 @@
 <template>
-  <div class="pesan container mt-15">
+  <div class="pesan container mb-14">
     <div
       class="new-consultation"
       v-if="userProfile.role == 'user' && daftar_pesan.length != 0"
@@ -172,8 +172,12 @@ export default {
 </script>
 
 <style scoped>
+.pesan {
+  margin-top: 60px;
+}
+
 .new-consultation {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .new-consultation a {
@@ -218,6 +222,8 @@ export default {
   color: #28190e;
   font-weight: 600;
   font-size: 18px;
+  max-height: 27px;
+  overflow: hidden;
 }
 
 .pesan .deskripsi {

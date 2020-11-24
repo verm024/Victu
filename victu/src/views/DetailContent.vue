@@ -129,6 +129,16 @@ export default {
           .collection("contents")
           .doc(this.$route.params.id)
           .update({ status: "posted", tanggal_diposting: firebase.timestamp });
+        await firebase.db
+          .collection("users")
+          .doc(this.data_konten.writer.id)
+          .collection("notifikasi")
+          .add({
+            judul: "Content Accepted",
+            pesan: this.data_konten.judul,
+            icon: "mdi-check",
+            tanggal_notifikasi: firebase.timestamp
+          });
       } catch (error) {
         console.error(error);
       }
@@ -139,6 +149,16 @@ export default {
           .collection("contents")
           .doc(this.$route.params.id)
           .update({ status: "deleted" });
+        await firebase.db
+          .collection("users")
+          .doc(this.data_konten.writer.id)
+          .collection("notifikasi")
+          .add({
+            judul: "Content Deleted",
+            pesan: this.data_konten.judul,
+            icon: "mdi-close",
+            tanggal_notifikasi: firebase.timestamp
+          });
       } catch (error) {
         console.error(error);
       }

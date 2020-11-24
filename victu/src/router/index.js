@@ -17,6 +17,7 @@ import DetailNutritionist from "../views/DetailNutritionist";
 import Writer from "../views/Dashboard/Writer";
 import AddContent from "../views/AddContent";
 import EditContent from "../views/EditContent";
+import NotifikasiWriter from "../views/NotifikasiWriter";
 import Nutritionist from "../views/Dashboard/Nutritionist";
 import ProofreadingContent from "../views/ProofreadingContent";
 import Admin from "../views/Dashboard/Admin";
@@ -192,6 +193,16 @@ const routes = [
       requiresLogin: true,
       allowedRole: "writer",
       title: "Edit Content"
+    }
+  },
+  {
+    path: "/notification",
+    name: "Notification",
+    component: NotifikasiWriter,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "writer",
+      title: "Notification"
     }
   },
   {
