@@ -5,10 +5,15 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-app-bar-nav-icon>
 
-      <v-toolbar-title>{{
+      <v-toolbar-title v-if="informasi_pesan.consultation">{{
         userProfile.role == "user"
           ? informasi_pesan.nutritionist.nama
           : informasi_pesan.user.nama
+      }}</v-toolbar-title>
+      <v-toolbar-title v-else>{{
+        userProfile.role == "admin"
+          ? informasi_pesan.user.nama
+          : informasi_pesan.nutritionist.nama
       }}</v-toolbar-title>
     </v-app-bar>
     <div class="container-fluid list-pesan">
@@ -165,29 +170,43 @@ export default {
   async beforeRouteEnter(to, from, next) {
     let userProfile = store.state.userProfile;
     let currentUser = store.state.currentUser;
-    if (userProfile.role == "nutritionist") {
-      let doc = await firebase.db
-        .collection("chats")
-        .doc(to.params.id)
-        .get();
-      let data = doc.data();
-      let nutritionistRef = await data.nutritionist.get();
-      if (currentUser.uid == nutritionistRef.id) {
-        next();
+    let doc = await firebase.db
+      .collection("chats")
+      .doc(to.params.id)
+      .get();
+
+    let data = doc.data();
+    if (data.consultation) {
+      if (userProfile.role == "nutritionist") {
+        let nutritionistRef = await data.nutritionist.get();
+        if (currentUser.uid == nutritionistRef.id) {
+          next();
+        } else {
+          next("/chat");
+        }
       } else {
-        next("/chat");
+        let userRef = await data.user.get();
+        if (currentUser.uid == userRef.id) {
+          next();
+        } else {
+          next("/chat");
+        }
       }
     } else {
-      let doc = await firebase.db
-        .collection("chats")
-        .doc(to.params.id)
-        .get();
-      let data = doc.data();
-      let userRef = await data.user.get();
-      if (currentUser.uid == userRef.id) {
-        next();
+      if (userProfile.role == "admin") {
+        let nutritionistRef = await data.nutritionist.get();
+        if (currentUser.uid == nutritionistRef.id) {
+          next();
+        } else {
+          next("/chat");
+        }
       } else {
-        next("/chat");
+        let userRef = await data.user.get();
+        if (currentUser.uid == userRef.id) {
+          next();
+        } else {
+          next("/chat");
+        }
       }
     }
   }

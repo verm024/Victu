@@ -100,6 +100,7 @@ export default {
                 "==",
                 firebase.db.collection("users").doc(this.currentUser.uid)
               )
+              .where("consultation", "==", true)
               .orderBy("tanggal_chat", "desc")
           );
         } else {
@@ -113,6 +114,7 @@ export default {
                 "==",
                 firebase.db.collection("users").doc(this.currentUser.uid)
               )
+              .where("consultation", "==", true)
               .orderBy("tanggal_chat", "desc")
           );
         }

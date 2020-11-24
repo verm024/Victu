@@ -43,7 +43,7 @@
             <v-list-item-title>Profile</v-list-item-title>
           </v-list-item>
 
-          <v-list-item @click="handleClickHelp">
+          <v-list-item @click="handleClickHelp('oZC9H0DPQ2R3GyNJDBJJax1Ze7X2')">
             <v-list-item-icon>
               <v-icon>mdi-help</v-icon>
             </v-list-item-icon>
@@ -212,8 +212,67 @@ export default {
     handleClickDetail(index) {
       this.detail = this.daftar_nutritionist[index];
     },
-    async handleClickHelp() {
-      console.log("Help clicked");
+    async handleClickHelp(id) {
+      let data;
+      try {
+        if (this.userProfile.role == "admin") {
+          data = await firebase.db
+            .collection("chats")
+            .where(
+              "nutritionist",
+              "==",
+              firebase.db.collection("users").doc(this.currentUser.uid)
+            )
+            .where("user", "==", firebase.db.collection("users").doc(id))
+            .get();
+        } else {
+          data = await firebase.db
+            .collection("chats")
+            .where(
+              "user",
+              "==",
+              firebase.db.collection("users").doc(this.currentUser.uid)
+            )
+            .where(
+              "nutritionist",
+              "==",
+              firebase.db.collection("users").doc(id)
+            )
+            .get();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      if (data.docs.length > 0) {
+        this.$router.push("/chat/" + data.docs[0].id);
+      } else {
+        let room;
+        try {
+          if (this.userProfile.role == "admin") {
+            room = await firebase.db.collection("chats").add({
+              nutritionist: firebase.db.collection("users").doc(id),
+              user: firebase.db.collection("users").doc(this.currentUser.uid),
+              tanggal_chat: new Date(),
+              consultation: false
+            });
+          } else {
+            room = await firebase.db.collection("chats").add({
+              user: firebase.db.collection("users").doc(this.currentUser.uid),
+              nutritionist: firebase.db.collection("users").doc(id),
+              tanggal_chat: new Date(),
+              consultation: false
+            });
+          }
+        } catch (error) {
+          console.error(error);
+        }
+        if (room) {
+          this.$router.push("/chat/" + room.id);
+        } else {
+          alert("Terjadi error, coba lagi nanti");
+        }
+      }
+      this.drawer = false;
     },
     async logout() {
       try {
@@ -224,6 +283,7 @@ export default {
       this.$store.commit("setCurrentUser", null);
       this.$store.commit("setUserProfile", null);
       this.$router.push("/login");
+      this.drawer = false;
     },
     async handleClickHubungi(id) {
       let data;
@@ -265,7 +325,8 @@ export default {
             room = await firebase.db.collection("chats").add({
               nutritionist: firebase.db.collection("users").doc(id),
               user: firebase.db.collection("users").doc(this.currentUser.uid),
-              tanggal_chat: new Date()
+              tanggal_chat: new Date(),
+              consultation: true
             });
           } else {
             room = await firebase.db.collection("chats").add({
@@ -273,7 +334,8 @@ export default {
               nutritionist: firebase.db
                 .collection("users")
                 .doc(this.currentUser.uid),
-              tanggal_chat: new Date()
+              tanggal_chat: new Date(),
+              consultation: true
             });
           }
         } catch (error) {

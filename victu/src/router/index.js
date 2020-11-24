@@ -90,7 +90,7 @@ const routes = [
     component: DetailPesan,
     meta: {
       requiresLogin: true,
-      allowedRole: "user+nutritionist",
+      allowedRole: "user+nutritionist+writer+admin",
       title: "Pesan"
     }
   },
