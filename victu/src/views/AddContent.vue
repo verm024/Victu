@@ -100,6 +100,10 @@ export default {
 </script>
 
 <style scoped>
+.add-content {
+  margin-top: 60px;
+}
+
 .button {
   margin-top: 40px;
   width: 100%;

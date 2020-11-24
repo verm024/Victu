@@ -142,6 +142,10 @@ export default {
 </script>
 
 <style scoped>
+.edit-content {
+  margin-top: 60px;
+}
+
 .button {
   margin-top: 40px;
   width: 100%;

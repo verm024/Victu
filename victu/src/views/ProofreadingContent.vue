@@ -53,7 +53,7 @@ export default {
 
 <style scoped>
 .proofreading {
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .card-proofreading {

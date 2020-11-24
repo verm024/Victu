@@ -11,7 +11,7 @@
           [560, 2],
           [768, 3]
         ]"
-        :paginationEnabled="true"
+        :paginationEnabled="false"
       >
         <slide class="mr-5" v-for="(review, i) in reviews" :key="i">
           <Review :review="review" />
