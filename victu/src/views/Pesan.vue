@@ -9,7 +9,7 @@
       </router-link>
     </div>
     <div
-      class="card-pesan"
+      class="card-pesan chat__history"
       v-for="(item, index) in daftar_pesan"
       :key="index"
       @click="$router.push('/chat/' + item.id)"
@@ -172,6 +172,10 @@ export default {
 </script>
 
 <style scoped>
+.chat__history {
+  cursor: pointer;
+}
+
 .pesan {
   margin-top: 60px;
 }

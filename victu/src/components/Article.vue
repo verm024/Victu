@@ -1,5 +1,5 @@
 <template>
-  <v-card :class="search ? 'mx-auto mb-5' : 'mr-auto'" width="300" flat>
+  <v-card class="article" :class="search ? 'mx-auto mb-5' : 'mr-auto'" width="300" flat>
     <v-img
       class="article__image"
       :src="article.foto"
@@ -26,6 +26,10 @@ export default {
 </script>
 
 <style scoped>
+.article {
+  cursor: pointer;
+}
+
 .article__image {
   width: 100%;
   height: auto;

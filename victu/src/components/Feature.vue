@@ -24,6 +24,7 @@ export default {
 <style scoped>
 .feature {
   min-width: 150px;
+  cursor: pointer;
 }
 
 .feature__image {
