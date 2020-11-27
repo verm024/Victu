@@ -30,6 +30,7 @@
           <div
             class="sender"
             v-if="informasi_pesan.user && item.sender == 'user'"
+            @click="detail_user = true"
           >
             {{ informasi_pesan.user.nama }}
           </div>
@@ -69,21 +70,102 @@
         </button>
       </div>
     </div>
+    <v-dialog
+      v-if="informasi_pesan.user.tanggal_lahir && informasi_pesan.consultation"
+      v-model="detail_user"
+      max-width="90%"
+    >
+      <v-card dark color="#28190E" class="dialog-card">
+        <div class="close-dialog-wrapper">
+          <v-btn icon dark @click="detail_user = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <v-card-text class="white--text">
+          <div class="detail-title text-center">
+            Patient's Information
+          </div>
+          <v-row class="text-center">
+            <v-col class="col-3">
+              <div class="detail-item-title">
+                Name
+              </div>
+              <div class="detail-item-subtitle">
+                {{ informasi_pesan.user.nama.split(" ")[0] }}
+              </div>
+            </v-col>
+            <v-col class="col-3">
+              <div class="detail-item-title">
+                Height
+              </div>
+              <div class="detail-item-subtitle">
+                {{ informasi_pesan.user.tinggi }} cm
+              </div>
+            </v-col>
+            <v-col class="col-3">
+              <div class="detail-item-title">
+                Weight
+              </div>
+              <div class="detail-item-subtitle">
+                {{ informasi_pesan.user.berat }} kg
+              </div>
+            </v-col>
+            <v-col class="col-3">
+              <div class="detail-item-title">
+                Age
+              </div>
+              <div class="detail-item-subtitle">
+                {{ getAge(informasi_pesan.user.tanggal_lahir.seconds) }}
+              </div>
+            </v-col>
+          </v-row>
+          <div class="detail-item-title">
+            Latest Calorie Graph
+          </div>
+          <div class="chart-wrapper d-flex justify-center">
+            <Chart :styles="chart_style" :chart-data="chart_data" />
+          </div>
+          <div class="detail-item-title mt-5">
+            Ideal Calorie
+          </div>
+          <div class="detail-item-subtitle">
+            {{
+              informasi_pesan.user.kalori_ideal
+                ? Math.ceil(informasi_pesan.user.kalori_ideal)
+                : 0
+            }}
+            cals
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import firebase from "../firebase";
 import { mapState } from "vuex";
+import Chart from "../components/Chart";
 import store from "../store";
 
 export default {
+  components: {
+    Chart
+  },
   data() {
     return {
       daftar_pesan: [],
       informasi_pesan: [],
       pesan_baru: "",
-      update_counter: 0
+      update_counter: 0,
+      detail_user: false,
+      intakes: [],
+      chart_data: {},
+      chart_style: {
+        width: "300px",
+        height: "300px",
+        position: "relative"
+      }
     };
   },
   watch: {
@@ -101,7 +183,52 @@ export default {
         this.$bind(
           "informasi_pesan",
           firebase.db.collection("chats").doc(this.$route.params.id)
-        );
+        ).then(() => {
+          this.$bind(
+            "intakes",
+            firebase.db
+              .collection("users")
+              .doc(this.informasi_pesan.user.id)
+              .collection("calorie")
+              .orderBy("tanggal_input", "desc")
+              .limit(7)
+          );
+        });
+      }
+    },
+    intakes: {
+      handler() {
+        let temp = [];
+        this.intakes.forEach(element => {
+          temp.push(Math.ceil(element.total_kalori));
+        });
+        let zeros = [];
+        if (temp.length < 7) {
+          for (let i = temp.length; i < 7; i++) {
+            zeros.push(0);
+          }
+        }
+        zeros.push(...temp);
+        temp = zeros;
+        let data = {
+          labels: [
+            "Day 1",
+            "Day 2",
+            "Day 3",
+            "Day 4",
+            "Day 5",
+            "Day 6",
+            "Day 7"
+          ],
+          datasets: [
+            {
+              label: "Last 7 Day Calorie Intakes",
+              data: temp,
+              backgroundColor: "#f7b516"
+            }
+          ]
+        };
+        this.chart_data = data;
       }
     }
   },
@@ -140,6 +267,16 @@ export default {
       }
       date = date.getDate();
       return date + "-" + month + "-" + year + " " + hours + ":" + minutes;
+    },
+    getAge(seconds) {
+      var today = new Date();
+      var birthDate = new Date(seconds * 1000);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
     },
     async kirimPesan() {
       if (this.pesan_baru != "") {
@@ -318,5 +455,40 @@ export default {
   font-size: 16px;
   margin-top: 50px;
   color: #89969f;
+}
+
+.dialog-card {
+  border-radius: 10px !important;
+}
+
+.close-dialog-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.detail-title {
+  font-family: Roboto;
+  font-weight: normal;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.detail-item-title {
+  font-weight: normal;
+  opacity: 0.7;
+  font-family: Nunito;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.detail-item-subtitle {
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 16px;
 }
 </style>
