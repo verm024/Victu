@@ -1,20 +1,23 @@
 <template>
   <div class="detail-pesan" v-if="informasi_pesan.user">
     <v-app-bar color="#28190E" dense dark fixed>
-      <v-app-bar-nav-icon @click="back">
-        <v-icon>mdi-chevron-left</v-icon>
-      </v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="back">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-app-bar-nav-icon>
 
-      <v-toolbar-title v-if="informasi_pesan.consultation">{{
-        userProfile.role == "user"
-          ? informasi_pesan.nutritionist.nama
-          : informasi_pesan.user.nama
-      }}</v-toolbar-title>
-      <v-toolbar-title v-else>{{
-        userProfile.role == "admin"
-          ? informasi_pesan.user.nama
-          : informasi_pesan.nutritionist.nama
-      }}</v-toolbar-title>
+        <v-toolbar-title v-if="informasi_pesan.consultation">{{
+          userProfile.role == "user"
+            ? informasi_pesan.nutritionist.nama
+            : informasi_pesan.user.nama
+        }}</v-toolbar-title>
+        <v-toolbar-title v-else>{{
+          userProfile.role == "admin"
+            ? informasi_pesan.user.nama
+            : informasi_pesan.nutritionist.nama
+        }}</v-toolbar-title>
+      <v-app-bar-nav-icon @click="detail_user = true" class="ml-auto">
+        <v-icon>mdi-information</v-icon>
+      </v-app-bar-nav-icon>
     </v-app-bar>
     <div class="container-fluid list-pesan">
       <div
@@ -30,7 +33,6 @@
           <div
             class="sender"
             v-if="informasi_pesan.user && item.sender == 'user'"
-            @click="detail_user = true"
           >
             {{ informasi_pesan.user.nama }}
           </div>
