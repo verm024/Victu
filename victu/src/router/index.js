@@ -23,6 +23,7 @@ import ProofreadingContent from "../views/ProofreadingContent";
 import Admin from "../views/Dashboard/Admin";
 import Calorie from "../views/Calorie";
 import PlotCalorie from "../views/PlotCalorie";
+import UpdateProfile from "../views/UpdateProfile";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,16 @@ const routes = [
     component: Home,
     meta: {
       title: "Victu"
+    }
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: UpdateProfile,
+    meta: {
+      requiresLogin: true,
+      allowedRole: "user+nutritionist+writer",
+      title: "Profile"
     }
   },
   {
