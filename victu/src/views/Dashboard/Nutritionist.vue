@@ -3,7 +3,7 @@
     <Welcome :user="user" />
 
     <div class="mb-7">
-      <SectionHeader header="Published" />
+      <SectionHeader header="Rating and Reviews" />
 
       <carousel
         :perPageCustom="[

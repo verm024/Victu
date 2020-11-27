@@ -6,14 +6,17 @@
       :key="index"
       @click="$router.push('/content/' + item.id)"
     >
-      <div class="image-wrapper">
-        <div class="image">
-          <v-img :src="item.foto"><v-overlay absolute></v-overlay></v-img>
+      <div class="d-flex">
+        <div class="image-wrapper">
+          <div class="image">
+            <v-img :src="item.foto"><v-overlay absolute></v-overlay></v-img>
+          </div>
+        </div>
+        <div class="content d-flex align-center">
+          <div class="judul">{{ item.judul }}</div>
         </div>
       </div>
-      <div class="content d-flex align-center">
-        <div class="judul">{{ item.judul }}</div>
-      </div>
+      <div class="time">{{ formatDate(item.tanggal_diposting.seconds) }}</div>
     </div>
     <div v-if="daftar_konten.length == 0" class="empty">
       No content yet
@@ -45,6 +48,23 @@ export default {
       }
     }
   },
+  methods: {
+    formatDate(timestamp) {
+      let date = new Date(timestamp * 1000);
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      if (hours < 10) {
+        hours = 0 + hours.toString();
+      }
+      if (minutes < 10) {
+        minutes = 0 + minutes.toString();
+      }
+      date = date.getDate();
+      return date + "-" + month + "-" + year + " " + hours + ":" + minutes;
+    }
+  },
   computed: {
     ...mapState(["currentUser", "userProfile"])
   }
@@ -57,8 +77,6 @@ export default {
 }
 
 .card-proofreading {
-  display: flex;
-  flex-direction: row;
   width: 100%;
   padding: 20px;
   background: #ffffff;
@@ -88,6 +106,16 @@ export default {
   color: #28190e;
   font-weight: 600;
   font-size: 18px;
+}
+
+.time {
+  width: fit-content;
+  margin-left: auto;
+  font-size: 12px;
+  color: #89969f;
+  font-weight: 300;
+  font-family: Nunito;
+  margin-top: 10px;
 }
 
 .empty {
