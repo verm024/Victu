@@ -16,7 +16,7 @@
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Dashboard</v-toolbar-title>
+      <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
     </v-app-bar>
     <v-navigation-drawer
       v-model="drawer"
@@ -228,6 +228,14 @@ export default {
   },
   computed: {
     ...mapState(["currentUser", "userProfile"])
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to, from) {
+        document.title = to.meta.title + " - Victu" || "Victu";
+      }
+    }
   }
 };
 </script>

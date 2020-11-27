@@ -72,7 +72,7 @@ const routes = [
     meta: {
       requiresLogin: true,
       allowedRole: "user",
-      title: "Input Food"
+      title: "Check Calorie"
     }
   },
   {
@@ -82,7 +82,7 @@ const routes = [
     meta: {
       requiresLogin: true,
       allowedRole: "user+nutritionist",
-      title: "Daftar Pesan"
+      title: "Consultation History"
     }
   },
   {
@@ -102,7 +102,7 @@ const routes = [
     meta: {
       requiresLogin: true,
       allowedRole: "user+writer+nutritionist+admin",
-      title: "Content"
+      title: "Read Content"
     }
   },
   {
@@ -117,7 +117,7 @@ const routes = [
   },
   {
     path: "/search-content",
-    name: "Search Content",
+    name: "Healthy Contents",
     component: SearchContent,
     meta: {
       requiresLogin: true,
@@ -132,7 +132,7 @@ const routes = [
     meta: {
       requiresLogin: true,
       allowedRole: "user",
-      title: "Plot Calorie"
+      title: "Calorie Graph"
     }
   },
   {
@@ -162,7 +162,7 @@ const routes = [
     meta: {
       requiresLogin: true,
       allowedRole: "nutritionist+admin",
-      title: "Proofreading"
+      title: "Content Checking"
     }
   },
   {
@@ -202,7 +202,7 @@ const routes = [
     meta: {
       requiresLogin: true,
       allowedRole: "writer",
-      title: "Notification"
+      title: "Notifications"
     }
   },
   {
