@@ -67,6 +67,7 @@
             label="Date of Birth"
             type="text"
             outlined
+            readonly
             color="#28190E"
             append-icon="mdi-calendar"
             @click="show_calendar = !show_calendar"
@@ -95,6 +96,7 @@
 
 <script>
 import firebase from "../../firebase";
+import validator from "validator";
 
 export default {
   data() {
@@ -115,46 +117,72 @@ export default {
   methods: {
     async register() {
       let registerData;
-      if (this.form_register.role == "user") {
-        registerData = {
-          email: this.form_register.email,
-          role: this.form_register.role,
-          nama: this.form_register.nama,
-          gender: this.form_register.gender,
-          tanggal_lahir: new Date(this.form_register.tanggal_lahir)
-        };
-      } else if (this.form_register.role == "writer") {
-        registerData = {
-          email: this.form_register.email,
-          role: this.form_register.role
-        };
-      } else if (this.form_register.role == "nutritionist") {
-        registerData = {
-          email: this.form_register.email,
-          role: this.form_register.role
-        };
-      }
-      let user;
-      try {
-        user = await firebase.auth.createUserWithEmailAndPassword(
-          this.form_register.email,
-          this.form_register.password
+      if (
+        validator.isEmail(this.form_register.email) &&
+        this.form_register.password.length >= 6 &&
+        this.form_register.password.length <= 20
+      ) {
+        if (this.form_register.role == "user") {
+          if (
+            this.form_register.nama == "" ||
+            this.form_register.gender == "" ||
+            this.form_register.tanggal_lahir == ""
+          ) {
+            alert("Harap isi semua form yang wajib diisi");
+            return;
+          }
+          registerData = {
+            email: this.form_register.email,
+            role: this.form_register.role,
+            nama: this.form_register.nama,
+            gender: this.form_register.gender,
+            tanggal_lahir: new Date(this.form_register.tanggal_lahir),
+            kalori_ideal: 0,
+            tinggi: 0,
+            berat: 0,
+            aktivitas: "Moderate"
+          };
+        } else if (this.form_register.role == "writer") {
+          registerData = {
+            email: this.form_register.email,
+            role: this.form_register.role
+          };
+        } else if (this.form_register.role == "nutritionist") {
+          registerData = {
+            email: this.form_register.email,
+            role: this.form_register.role
+          };
+        }
+        let user;
+        try {
+          user = await firebase.auth.createUserWithEmailAndPassword(
+            this.form_register.email,
+            this.form_register.password
+          );
+        } catch (error) {
+          console.error(error);
+          if (error.code.includes("email-already-in-use")) {
+            alert("Email sudah pernah dipakai");
+          }
+          return;
+        }
+        user = user.user;
+        try {
+          await firebase.db
+            .collection("users")
+            .doc(user.uid)
+            .set(registerData);
+        } catch (error) {
+          console.error(error);
+        }
+        this.$store.commit("setCurrentUser", user);
+        await this.$store.dispatch("fetchUserProfile");
+        this.$router.push("/" + this.form_register.role);
+      } else {
+        alert(
+          "Format email harus sesuai dengan yang telah ditentukan dan panjang password harus antara 6 hingga 20 karakter"
         );
-      } catch (error) {
-        console.error(error);
       }
-      user = user.user;
-      try {
-        await firebase.db
-          .collection("users")
-          .doc(user.uid)
-          .set(registerData);
-      } catch (error) {
-        console.error(error);
-      }
-      this.$store.commit("setCurrentUser", user);
-      await this.$store.dispatch("fetchUserProfile");
-      this.$router.push("/" + this.form_register.role);
     }
   }
 };

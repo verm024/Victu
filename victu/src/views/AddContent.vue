@@ -45,50 +45,59 @@ export default {
         return;
       }
       if (!files[0].type.includes("image")) {
+        alert("Tipe file harus berupa gambar");
         this.form_konten.foto = "";
       } else {
         this.form_konten.foto = files[0];
       }
     },
     async addContent() {
-      let contentData = {
-        judul: this.form_konten.judul,
-        isi: this.form_konten.isi,
-        writer: firebase.db.collection("users").doc(this.currentUser.uid),
-        status: "proofreading",
-        tanggal_diposting: firebase.timestamp
-      };
-      let doc;
-      try {
-        doc = await firebase.db.collection("contents").add(contentData);
-      } catch (error) {
-        console.error(error);
-      }
-      if (doc.id) {
+      if (
+        this.form_konten.judul == "" ||
+        this.form_konten.isi == "" ||
+        this.form_konten.foto == ""
+      ) {
+        alert("Form tidak boleh kosong");
+      } else {
+        let contentData = {
+          judul: this.form_konten.judul,
+          isi: this.form_konten.isi,
+          writer: firebase.db.collection("users").doc(this.currentUser.uid),
+          status: "proofreading",
+          tanggal_diposting: firebase.timestamp
+        };
+        let doc;
         try {
-          let ref = await firebase.storage
-            .ref()
-            .child(
-              "/contents/" +
-                doc.id +
-                "." +
-                this.form_konten.foto.type.split("/")[1]
-            );
-          let task = await ref.put(this.form_konten.foto);
-          let url = await task.ref.getDownloadURL();
-          if (url) {
-            try {
-              await firebase.db
-                .collection("contents")
-                .doc(doc.id)
-                .update({ foto: url });
-            } catch (error) {
-              console.error(error);
-            }
-            this.$router.push("/writer");
-          }
+          doc = await firebase.db.collection("contents").add(contentData);
         } catch (error) {
           console.error(error);
+        }
+        if (doc.id) {
+          try {
+            let ref = await firebase.storage
+              .ref()
+              .child(
+                "/contents/" +
+                  doc.id +
+                  "." +
+                  this.form_konten.foto.type.split("/")[1]
+              );
+            let task = await ref.put(this.form_konten.foto);
+            let url = await task.ref.getDownloadURL();
+            if (url) {
+              try {
+                await firebase.db
+                  .collection("contents")
+                  .doc(doc.id)
+                  .update({ foto: url });
+              } catch (error) {
+                console.error(error);
+              }
+              this.$router.push("/writer");
+            }
+          } catch (error) {
+            console.error(error);
+          }
         }
       }
     }

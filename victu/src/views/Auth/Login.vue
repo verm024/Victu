@@ -48,6 +48,7 @@
 
 <script>
 import firebase from "../../firebase";
+import validator from "validator";
 
 export default {
   data() {
@@ -62,19 +63,34 @@ export default {
   methods: {
     async login() {
       let user;
-      try {
-        user = await firebase.auth.signInWithEmailAndPassword(
-          this.form_login.email,
-          this.form_login.password
+      if (
+        validator.isEmail(this.form_login.email) &&
+        this.form_login.password.length >= 6 &&
+        this.form_login.password.length <= 20
+      ) {
+        try {
+          user = await firebase.auth.signInWithEmailAndPassword(
+            this.form_login.email,
+            this.form_login.password
+          );
+        } catch (error) {
+          console.error(error);
+          if (error.code.includes("wrong-password")) {
+            alert("Password salah!");
+          } else if (error.code.includes("user-not-found")) {
+            alert("Pastikan email yang anda masukkan sudah benar");
+          }
+        }
+        if (user) {
+          user = user.user;
+          this.$store.commit("setCurrentUser", user);
+          await this.$store.dispatch("fetchUserProfile");
+          this.$router.push("/" + this.$store.state.userProfile.role);
+        }
+      } else {
+        alert(
+          "Format email harus sesuai dengan yang telah ditentukan dan panjang password harus antara 6 hingga 20 karakter"
         );
-      } catch (error) {
-        console.error(error);
-      }
-      if (user) {
-        user = user.user;
-        this.$store.commit("setCurrentUser", user);
-        await this.$store.dispatch("fetchUserProfile");
-        this.$router.push("/" + this.$store.state.userProfile.role);
       }
     }
   }

@@ -50,56 +50,61 @@ export default {
         return;
       }
       if (!files[0].type.includes("image")) {
+        alert("Tipe file harus berupa gambar");
         this.form_konten.new_foto = "";
       } else {
         this.form_konten.new_foto = files[0];
       }
     },
     async updateContent() {
-      let contentData = {
-        judul: this.form_konten.judul,
-        isi: this.form_konten.isi,
-        writer: firebase.db.collection("users").doc(this.currentUser.uid),
-        status: "proofreading",
-        tanggal_diposting: firebase.timestamp
-      };
-      try {
-        await firebase.db
-          .collection("contents")
-          .doc(this.$route.params.id)
-          .update(contentData);
-      } catch (error) {
-        console.error(error);
-      }
-      if (this.$route.params.id) {
-        if (this.form_konten.new_foto != "") {
-          try {
-            let ref = await firebase.storage
-              .ref()
-              .child(
-                "/contents/" +
-                  this.$route.params.id +
-                  "." +
-                  this.form_konten.new_foto.type.split("/")[1]
-              );
-            let task = await ref.put(this.form_konten.new_foto);
-            let url = await task.ref.getDownloadURL();
-            if (url) {
-              try {
-                await firebase.db
-                  .collection("contents")
-                  .doc(this.$route.params.id)
-                  .update({ foto: url });
-              } catch (error) {
-                console.error(error);
+      if (this.form_konten.judul == "" || this.form_konten.isi == "") {
+        alert("Form tidak boleh kosong");
+      } else {
+        let contentData = {
+          judul: this.form_konten.judul,
+          isi: this.form_konten.isi,
+          writer: firebase.db.collection("users").doc(this.currentUser.uid),
+          status: "proofreading",
+          tanggal_diposting: firebase.timestamp
+        };
+        try {
+          await firebase.db
+            .collection("contents")
+            .doc(this.$route.params.id)
+            .update(contentData);
+        } catch (error) {
+          console.error(error);
+        }
+        if (this.$route.params.id) {
+          if (this.form_konten.new_foto != "") {
+            try {
+              let ref = await firebase.storage
+                .ref()
+                .child(
+                  "/contents/" +
+                    this.$route.params.id +
+                    "." +
+                    this.form_konten.new_foto.type.split("/")[1]
+                );
+              let task = await ref.put(this.form_konten.new_foto);
+              let url = await task.ref.getDownloadURL();
+              if (url) {
+                try {
+                  await firebase.db
+                    .collection("contents")
+                    .doc(this.$route.params.id)
+                    .update({ foto: url });
+                } catch (error) {
+                  console.error(error);
+                }
+                this.$router.push("/writer");
               }
-              this.$router.push("/writer");
+            } catch (error) {
+              console.error(error);
             }
-          } catch (error) {
-            console.error(error);
+          } else {
+            this.$router.push("/writer");
           }
-        } else {
-          this.$router.push("/writer");
         }
       }
     }

@@ -165,101 +165,116 @@ export default {
       return age;
     },
     async saveFoodIntake() {
-      let today = new Date(firebase.timestamp.seconds * 1000);
-      today.setHours(0, 0, 1, 0);
-      today = today / 1000;
-      try {
-        let doc = await firebase.db
-          .collection("users")
-          .doc(this.currentUser.uid)
-          .collection("calorie")
-          .where("tanggal_input", "==", today)
-          .get();
-        if (doc.empty) {
-          let newDoc = await firebase.db
+      if (this.food_dipilih.length == 0) {
+        alert("Anda belum memilih makanan untuk diinput");
+      } else {
+        let today = new Date(firebase.timestamp.seconds * 1000);
+        today.setHours(0, 0, 1, 0);
+        today = today / 1000;
+        try {
+          let doc = await firebase.db
             .collection("users")
             .doc(this.currentUser.uid)
             .collection("calorie")
-            .add({ tanggal_input: today, total_kalori: this.total_kalori });
-          await firebase.db
-            .collection("users")
-            .doc(this.currentUser.uid)
-            .collection("calorie")
-            .doc(newDoc.id)
-            .collection("inputs")
-            .add({
-              total_kalori: this.total_kalori,
-              makanan: this.food_dipilih
-            });
-          await firebase.db
-            .collection("users")
-            .doc(this.currentUser.uid)
-            .collection("calorie")
-            .doc(newDoc.id)
-            .update({
-              total_kalori: this.kalori_hari.total_kalori + this.total_kalori
-            });
-        } else {
-          await firebase.db
-            .collection("users")
-            .doc(this.currentUser.uid)
-            .collection("calorie")
-            .doc(doc.docs[0].id)
-            .collection("inputs")
-            .add({
-              total_kalori: this.total_kalori,
-              makanan: this.food_dipilih
-            });
-          await firebase.db
-            .collection("users")
-            .doc(this.currentUser.uid)
-            .collection("calorie")
-            .doc(doc.docs[0].id)
-            .update({
-              total_kalori: this.kalori_hari.total_kalori + this.total_kalori
-            });
+            .where("tanggal_input", "==", today)
+            .get();
+          if (doc.empty) {
+            let newDoc = await firebase.db
+              .collection("users")
+              .doc(this.currentUser.uid)
+              .collection("calorie")
+              .add({ tanggal_input: today, total_kalori: this.total_kalori });
+            await firebase.db
+              .collection("users")
+              .doc(this.currentUser.uid)
+              .collection("calorie")
+              .doc(newDoc.id)
+              .collection("inputs")
+              .add({
+                total_kalori: this.total_kalori,
+                makanan: this.food_dipilih
+              });
+            await firebase.db
+              .collection("users")
+              .doc(this.currentUser.uid)
+              .collection("calorie")
+              .doc(newDoc.id)
+              .update({
+                total_kalori: this.kalori_hari.total_kalori + this.total_kalori
+              });
+          } else {
+            await firebase.db
+              .collection("users")
+              .doc(this.currentUser.uid)
+              .collection("calorie")
+              .doc(doc.docs[0].id)
+              .collection("inputs")
+              .add({
+                total_kalori: this.total_kalori,
+                makanan: this.food_dipilih
+              });
+            await firebase.db
+              .collection("users")
+              .doc(this.currentUser.uid)
+              .collection("calorie")
+              .doc(doc.docs[0].id)
+              .update({
+                total_kalori: this.kalori_hari.total_kalori + this.total_kalori
+              });
+          }
+          this.$router.push("/user");
+        } catch (error) {
+          console.error(error);
         }
-        this.$router.push("/user");
-      } catch (error) {
-        console.error(error);
       }
     },
     async checkIdeal() {
-      let factor = 1;
-      if (this.ideal.aktivitas == "Low") {
-        factor = 1.2;
-      } else if (this.ideal.aktivitas == "Moderate") {
-        factor = 1.3;
+      if (
+        this.ideal.aktivitas == "" ||
+        this.ideal.berat == "" ||
+        this.ideal.tinggi == ""
+      ) {
+        alert("Form tidak boleh kosong");
       } else {
-        factor = 1.4;
-      }
-      let age = await this.getAge(this.userProfile.tanggal_lahir.seconds);
-      let idealCalorie = 0;
-      if (this.userProfile.gender == "Male") {
-        idealCalorie =
-          factor *
-          (66.5 + 13.8 * this.ideal.berat + 5 * this.ideal.tinggi - 6.8 * age);
-      } else {
-        idealCalorie =
-          factor *
-          (655.1 +
-            9.6 * this.ideal.berat +
-            1.9 * this.ideal.tinggi -
-            4.7 * age);
-      }
-      try {
-        await firebase.db
-          .collection("users")
-          .doc(this.currentUser.uid)
-          .update({
-            kalori_ideal: idealCalorie,
-            berat: this.ideal.berat,
-            tinggi: this.ideal.tinggi,
-            aktivitas: this.ideal.aktivitas
-          });
-        this.$store.dispatch("fetchUserProfile");
-      } catch (error) {
-        console.error(error);
+        let factor = 1;
+        if (this.ideal.aktivitas == "Low") {
+          factor = 1.2;
+        } else if (this.ideal.aktivitas == "Moderate") {
+          factor = 1.3;
+        } else {
+          factor = 1.4;
+        }
+        let age = await this.getAge(this.userProfile.tanggal_lahir.seconds);
+        let idealCalorie = 0;
+        if (this.userProfile.gender == "Male") {
+          idealCalorie =
+            factor *
+            (66.5 +
+              13.8 * this.ideal.berat +
+              5 * this.ideal.tinggi -
+              6.8 * age);
+        } else {
+          idealCalorie =
+            factor *
+            (655.1 +
+              9.6 * this.ideal.berat +
+              1.9 * this.ideal.tinggi -
+              4.7 * age);
+        }
+        try {
+          await firebase.db
+            .collection("users")
+            .doc(this.currentUser.uid)
+            .update({
+              kalori_ideal: idealCalorie,
+              berat: this.ideal.berat,
+              tinggi: this.ideal.tinggi,
+              aktivitas: this.ideal.aktivitas
+            });
+          this.$store.dispatch("fetchUserProfile");
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   },
