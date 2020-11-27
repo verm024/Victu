@@ -142,6 +142,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
+      this.$route.push("/" + this.userProfile.role);
     },
     async hapusKonten() {
       try {
@@ -162,6 +163,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
+      this.$route.push("/" + this.userProfile.role);
     }
   },
   computed: {
