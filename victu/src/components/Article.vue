@@ -1,5 +1,10 @@
 <template>
-  <v-card class="article" :class="search ? 'mx-auto mb-5' : 'mr-auto'" width="300" flat>
+  <v-card
+    class="article"
+    :class="search ? 'mx-auto mb-5' : 'mr-auto'"
+    width="300"
+    flat
+  >
     <v-img
       class="article__image"
       :src="article.foto"
